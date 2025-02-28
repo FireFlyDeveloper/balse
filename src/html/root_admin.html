@@ -60,43 +60,43 @@
 
     <!-- Navigation -->
     <nav class="bg-blue-700 text-white shadow-md">
-        <div class="max-w-6xl mx-auto px-4">
-          <ul class="flex space-x-6 p-4">
-            <li>
-              <a
-                href="#instructors"
-                class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                <i class="bi bi-person-standing mr-2"></i> Instructors
-              </a>
-            </li>
-            <li>
-              <a
-                href="#subjects"
-                class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                <i class="bi bi-journal-bookmark mr-2"></i> Subjects
-              </a>
-            </li>
-            <li>
-              <a
-                href="#strands"
-                class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                <i class="bi bi-layers mr-2"></i> Strands
-              </a>
-            </li>
-            <li>
-              <a
-                href="#sections"
-                class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-              >
-                <i class="bi bi-grid mr-2"></i> Sections
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <div class="max-w-6xl mx-auto px-4">
+        <ul class="flex space-x-6 p-4">
+          <li>
+            <a
+              href="#instructors"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-person-standing mr-2"></i> Instructors
+            </a>
+          </li>
+          <li>
+            <a
+              href="#subjects"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-journal-bookmark mr-2"></i> Subjects
+            </a>
+          </li>
+          <li>
+            <a
+              href="#strands"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-layers mr-2"></i> Strands
+            </a>
+          </li>
+          <li>
+            <a
+              href="#sections"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-grid mr-2"></i> Sections
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
     <!-- Main Content -->
     <div class="dashboard-container max-w-6xl mx-auto px-4 py-8">
@@ -134,8 +134,9 @@
             window.location.href = "/login-root";
           } else {
             const instructors = data.data;
-            const instructorTableBody =
-              document.getElementById("instructorTableBody");
+            const instructorTableBody = document.getElementById(
+              "instructorTableBody",
+            );
             instructorTableBody.innerHTML = "";
 
             instructors.forEach((instructor) => {
@@ -148,11 +149,13 @@
               <td class="p-4">${instructor.middle_name || ""}</td>
               <td class="p-4">${instructor.last_name}</td>
             `;
-            instructorTableBody.appendChild(row);
+              instructorTableBody.appendChild(row);
             });
           }
         })
-        .catch((error) => console.error("Error loading instructor data:", error));
+        .catch((error) =>
+          console.error("Error loading instructor data:", error),
+        );
 
       function redirectToInstructorDetail(id) {
         window.location.href = `/info/instructor/${id}`;
