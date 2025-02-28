@@ -28,7 +28,6 @@ const tables = [
       { name: "first_name", type: "text" },
       { name: "middle_name", type: "text" },
       { name: "last_name", type: "text" },
-      { name: "subjects", type: "multiple" },
     ],
   },
   {
