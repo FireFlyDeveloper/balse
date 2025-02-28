@@ -1,5 +1,5 @@
 export type SessionDataTypes = {
-  id: string;
-  loggedIn: boolean;
-  role: "student" | "admin" | "root" | null;
+    LRN: string;
+    loggedIn: boolean;
+    role: "student" | "admin" | "root" | null;
 };
