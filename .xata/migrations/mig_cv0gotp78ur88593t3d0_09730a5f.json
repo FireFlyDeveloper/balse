@@ -1,0 +1,18 @@
+{
+  "id": "mig_cv0gotp78ur88593t3d0",
+  "parentID": "mig_cv0gohdrq83jeasuu900",
+  "checksum": "1:09730a5facfd2067900992d295d5a6aa933b3fcf565efcda361d09521005bf69",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": "rootadmin"
+        },
+        "table": "root"
+      }
+    }
+  ]
+}

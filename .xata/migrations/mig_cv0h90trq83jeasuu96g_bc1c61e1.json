@@ -1,0 +1,13 @@
+{
+  "id": "mig_cv0h90trq83jeasuu96g",
+  "parentID": "mig_cv0h73178ur88593t3g0",
+  "checksum": "1:bc1c61e16a3f3e8a76d6925e61d76616505510d0ec2b0afec4d1343f4a099d3d",
+  "operations": [
+    {
+      "renameTable": {
+        "newName": "instructors",
+        "oldName": "admin"
+      }
+    }
+  ]
+}

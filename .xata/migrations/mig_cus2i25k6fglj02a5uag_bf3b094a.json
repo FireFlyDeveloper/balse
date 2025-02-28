@@ -1,0 +1,16 @@
+{
+  "id": "mig_cus2i25k6fglj02a5uag",
+  "parentID": "mig_cus2hrlk6fglj02a5u9g",
+  "checksum": "1:bf3b094abb00e45a80a00b198e0d0184183dc668c93820981c094d37821130a4",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password",
+          "type": "text"
+        },
+        "table": "admin"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mig_curvnldk6fglj02a5tig",
+  "parentID": "mig_curvna4bu1q7u5mv4fb0",
+  "checksum": "1:f6b05687ef1959a3f1bf6d606059a5d14cbc82df515579d677525979186be37d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "subjects",
+          "type": "json"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

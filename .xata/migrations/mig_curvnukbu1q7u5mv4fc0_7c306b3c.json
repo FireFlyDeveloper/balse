@@ -1,0 +1,16 @@
+{
+  "id": "mig_curvnukbu1q7u5mv4fc0",
+  "parentID": "mig_curvnqdk6fglj02a5tjg",
+  "checksum": "1:7c306b3c39667998648a5a76b1c946b899079f9d5735191c5374cb71e50ac1c3",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

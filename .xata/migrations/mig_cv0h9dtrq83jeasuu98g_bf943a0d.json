@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0h9dtrq83jeasuu98g",
+  "parentID": "mig_cv0h9atrq83jeasuu97g",
+  "checksum": "1:bf943a0d88516ab70c2d2e22786962e5c4ad1a4116a81282567b24a3509063a3",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "last_name",
+          "type": "text"
+        },
+        "table": "instructors"
+      }
+    }
+  ]
+}

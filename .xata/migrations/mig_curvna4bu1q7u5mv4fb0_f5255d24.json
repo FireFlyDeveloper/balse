@@ -1,0 +1,11 @@
+{
+  "id": "mig_curvna4bu1q7u5mv4fb0",
+  "checksum": "1:f5255d24f49b90deb0aefd52ee863758062821d2d101335b5e51f14a193b4ade",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Students"
+      }
+    }
+  ]
+}

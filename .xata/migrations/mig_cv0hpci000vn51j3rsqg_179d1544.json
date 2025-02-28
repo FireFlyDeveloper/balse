@@ -1,0 +1,13 @@
+{
+  "id": "mig_cv0hpci000vn51j3rsqg",
+  "parentID": "mig_cv0hb0978ur88593t3hg",
+  "checksum": "1:179d15444512189ef4211ed9261766a7d88ba1f274880117c78891a2bde593b9",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "instructors",
+        "table": "root"
+      }
+    }
+  ]
+}

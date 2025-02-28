@@ -1,0 +1,27 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "balsenew",
+      "dependencies": {
+        "@xata.io/client": "^0.30.1",
+        "hono": "^4.7.2",
+        "hono-sessions": "^0.7.1",
+        "prettier": "^3.5.1",
+      },
+    },
+  },
+  "packages": {
+    "@xata.io/client": ["@xata.io/client@0.30.1", "", { "peerDependencies": { "typescript": ">=4.5" } }, "sha512-dAzDPHmIfenVIpF39m1elmW5ngjWu2mO8ZqJBN7dmYdXr98uhPANfLdVZnc3mUNG+NH37LqY1dSO862hIo2oRw=="],
+
+    "hono": ["hono@4.7.2", "", {}, "sha512-8V5XxoOF6SI12jkHkzX/6aLBMU5GEF5g387EjVSQipS0DlxWgWGSMeEayY3CRBjtTUQYwLHx9JYouWqKzy2Vng=="],
+
+    "hono-sessions": ["hono-sessions@0.7.1", "", { "dependencies": { "hono": "^4.0.0", "iron-webcrypto": "0.10.1" } }, "sha512-GHIXltc74BfGZNzlHzapc2mwQJHF7/YNpeT9tZ76j8DEXldoE111elLjFvZ3i5wveTU+/IiQwnl2INAji/ZEaA=="],
+
+    "iron-webcrypto": ["iron-webcrypto@0.10.1", "", {}, "sha512-QGOS8MRMnj/UiOa+aMIgfyHcvkhqNUsUxb1XzskENvbo+rEfp6TOwqd1KPuDzXC4OnGHcMSVxDGRoilqB8ViqA=="],
+
+    "prettier": ["prettier@3.5.2", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg=="],
+
+    "typescript": ["typescript@5.7.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw=="],
+  }
+}

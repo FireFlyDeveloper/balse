@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0h4up78ur88593t3f0",
+  "parentID": "mig_cv0h4o2000vn51j3rsm0",
+  "checksum": "1:f48646c95cbef7cb69a3c27b55bc65f0dfd350aa757b1b563af7bef78fafd911",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "instructors",
+          "type": "multiple"
+        },
+        "table": "root"
+      }
+    }
+  ]
+}

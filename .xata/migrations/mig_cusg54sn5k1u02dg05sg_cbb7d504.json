@@ -1,0 +1,16 @@
+{
+  "id": "mig_cusg54sn5k1u02dg05sg",
+  "parentID": "mig_cus2i25k6fglj02a5uag",
+  "checksum": "1:cbb7d5047c1e2e55f9983cff7989c7821170f84484c1aa68bad4d64d27083687",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "section",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

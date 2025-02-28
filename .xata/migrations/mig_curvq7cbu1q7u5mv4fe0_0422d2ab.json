@@ -1,0 +1,16 @@
+{
+  "id": "mig_curvq7cbu1q7u5mv4fe0",
+  "parentID": "mig_curvq45k6fglj02a5tkg",
+  "checksum": "1:0422d2ab3952c376676bb16a02ef33e7e1eda6fd4755612f313978648bf3656e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "middle_name",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

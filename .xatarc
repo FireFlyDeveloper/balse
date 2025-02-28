@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Kim-Eduard-Saludes-s-workspace-egeos8.ap-southeast-2.xata.sh/db/BALSE",
+  "codegen": {
+    "output": "src/database/xata.ts"
+  }
+}

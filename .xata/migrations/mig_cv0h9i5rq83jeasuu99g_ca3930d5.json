@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0h9i5rq83jeasuu99g",
+  "parentID": "mig_cv0h9dtrq83jeasuu98g",
+  "checksum": "1:ca3930d5ab96fa9bb1cc7d2490907087310b19b269c4455c0e7a4d39429dd148",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "subjects",
+          "type": "multiple"
+        },
+        "table": "instructors"
+      }
+    }
+  ]
+}
