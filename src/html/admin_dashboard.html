@@ -506,7 +506,7 @@
             .map(
               (department) => `
                   <tr class="hover:bg-blue-50 cursor-pointer transition-all" 
-                      onclick="redirectToDepartmentDetail(${department.id})">
+                      onclick="redirectToDepartmentDetail('${department.id}')">
                     <td class="p-4">${department.department_name}</td>
                   </tr>
                 `,
