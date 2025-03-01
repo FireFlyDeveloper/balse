@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0p9lp78ur88593t5q0",
+  "parentID": "mig_cv0p9hp78ur88593t5p0",
+  "checksum": "1:d9a2f0ff9377e1fe76147575f1b27c3ed570da86118d9f049ee9ce53ea7cdf28",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "year_level",
+          "type": "int"
+        },
+        "table": "Sections"
+      }
+    }
+  ]
+}

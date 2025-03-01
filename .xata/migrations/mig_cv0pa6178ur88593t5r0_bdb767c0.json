@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0pa6178ur88593t5r0",
+  "parentID": "mig_cv0p9lp78ur88593t5q0",
+  "checksum": "1:bdb767c066243b06fc01a49d63616cd7a9926b75e246768b642f0ab41ede6506",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "section_id",
+          "type": "link",
+          "link": {
+            "table": "Sections"
+          }
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

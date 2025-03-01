@@ -1,0 +1,13 @@
+{
+  "id": "mig_cv0l4k2000vn51j3rtjg",
+  "parentID": "mig_cv0l3tlrq83jeasuu9r0",
+  "checksum": "1:f7ce790930a3dc7b41fe82f296e4c10bdb944e66017c9dde84a73df02c4e5301",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "subjects",
+        "table": "instructors"
+      }
+    }
+  ]
+}

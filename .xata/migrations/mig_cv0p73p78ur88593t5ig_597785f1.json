@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0p73p78ur88593t5ig",
+  "parentID": "mig_cv0p6s178ur88593t5hg",
+  "checksum": "1:597785f1087eccc15da06f88953f61f5741747a7e7674f15c78670c3461407b3",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "year_level",
+          "type": "int"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

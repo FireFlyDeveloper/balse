@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0pejq000vn51j3ruj0",
+  "parentID": "mig_cv0peeq000vn51j3rui0",
+  "checksum": "1:dcb6f0e26349e3ed778e579e445b70dc5dfcf6cb43ac50c73e88e6cfa6e22d9b",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "user_id",
+          "type": "link",
+          "link": {
+            "table": "Users"
+          }
+        },
+        "table": "Logs"
+      }
+    }
+  ]
+}

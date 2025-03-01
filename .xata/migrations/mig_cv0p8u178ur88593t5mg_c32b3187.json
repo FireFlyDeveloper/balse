@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0p8u178ur88593t5mg",
+  "parentID": "mig_cv0p8hp78ur88593t5lg",
+  "checksum": "1:c32b318770692297b43e4b83f16c6bb29069f10ead6c7f0e8aa4fe2057903441",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "user_id",
+          "type": "link",
+          "link": {
+            "table": "Users"
+          }
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

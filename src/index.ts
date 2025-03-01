@@ -1,6 +1,7 @@
 import { Context, Hono } from "hono";
 import { Session, sessionMiddleware, CookieStore } from "hono-sessions";
 import { SessionDataTypes } from "./models/types";
+import router from "./route/router";
 
 const app = new Hono<{
   Variables: {
@@ -24,12 +25,13 @@ app.use(
   }),
 );
 
+app.route("/", router);
+
 app.post("/logout", async (c: Context) => {
   const session = c.get("session");
   session.forget("id");
   session.forget("loggedIn");
   session.forget("role");
-  return c.redirect("/login");
 });
 
 app.get("/", (c: Context) => {

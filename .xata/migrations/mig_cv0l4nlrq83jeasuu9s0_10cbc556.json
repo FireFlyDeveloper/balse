@@ -1,0 +1,18 @@
+{
+  "id": "mig_cv0l4nlrq83jeasuu9s0",
+  "parentID": "mig_cv0l4k2000vn51j3rtjg",
+  "checksum": "1:10cbc556eabb26a421bae482251dc9a793307d7e822533b50227ae06f7fa978c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "subjects",
+          "type": "json",
+          "notNull": true,
+          "defaultValue": "[]"
+        },
+        "table": "instructors"
+      }
+    }
+  ]
+}

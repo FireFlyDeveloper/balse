@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv0paop78ur88593t5v0",
+  "parentID": "mig_cv0pal178ur88593t5tg",
+  "checksum": "1:9c0c9d90a43d5985800be87af32e47f155bd17a66a03afae430be1e8a7ac23ce",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Teacher_Subjects"
+      }
+    }
+  ]
+}

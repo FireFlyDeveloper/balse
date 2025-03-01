@@ -1,0 +1,18 @@
+{
+  "id": "mig_cv0pal178ur88593t5tg",
+  "parentID": "mig_cv0pag2000vn51j3rudg",
+  "checksum": "1:1576fd10ad71db532d500d68e777897086fd85e08d6f3c2cb7267396c0bc571d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "description",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Subjects"
+      }
+    }
+  ]
+}

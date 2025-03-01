@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0pe55rq83jeasuuarg",
+  "parentID": "mig_cv0pe0trq83jeasuuaqg",
+  "checksum": "1:740a725a144f5f0cedbffe7a37c06d8908e7f46244a03771ca6ef6c383366c27",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "student_id",
+          "type": "link",
+          "link": {
+            "table": "Students"
+          }
+        },
+        "table": "Student_Averages"
+      }
+    }
+  ]
+}

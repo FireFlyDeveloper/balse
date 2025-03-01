@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv0pd05rq83jeasuuam0",
+  "parentID": "mig_cv0pcmq000vn51j3rufg",
+  "checksum": "1:c2f8b1e82df66c32ca223310e3d7f1e1fa08518396fdbb03f887092d183a56bd",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Grades"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "mig_cv0p9hp78ur88593t5p0",
+  "parentID": "mig_cv0p9bh78ur88593t5o0",
+  "checksum": "1:018294cdac27600b6c713ece1e6d7eb20ad00ff06070728d49bd61c24146fba6",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Sections"
+      }
+    }
+  ]
+}

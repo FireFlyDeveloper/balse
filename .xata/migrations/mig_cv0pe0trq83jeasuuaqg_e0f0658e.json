@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv0pe0trq83jeasuuaqg",
+  "parentID": "mig_cv0pdslrq83jeasuuap0",
+  "checksum": "1:e0f0658e9e743e849ab430734b1793457f7dd14ca02f901acd27cc39298a7537",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Student_Averages"
+      }
+    }
+  ]
+}

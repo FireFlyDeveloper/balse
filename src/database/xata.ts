@@ -8,62 +8,154 @@ import type {
 
 const tables = [
   {
+    name: "Users",
+    columns: [
+      { name: "username", type: "text", notNull: true, defaultValue: "" },
+      { name: "password", type: "text", notNull: true, defaultValue: "" },
+      { name: "role", type: "text", notNull: true, defaultValue: "" },
+    ],
+    revLinks: [
+      { column: "user_id", table: "Teachers" },
+      { column: "user_id", table: "Students" },
+      { column: "user_id", table: "Logs" },
+    ],
+  },
+  {
+    name: "Teachers",
+    columns: [
+      { name: "name", type: "text", notNull: true, defaultValue: "" },
+      { name: "user_id", type: "link", link: { table: "Users" } },
+      { name: "email", type: "text" },
+    ],
+    revLinks: [
+      { column: "teacher_id", table: "Teacher_Subjects" },
+      { column: "teacher_id", table: "Student_Subjects" },
+      { column: "teacher_id", table: "Grades" },
+    ],
+  },
+  {
     name: "Students",
     columns: [
-      { name: "subjects", type: "json" },
+      { name: "name", type: "text", notNull: true, defaultValue: "" },
+      { name: "year_level", type: "int" },
       { name: "email", type: "text" },
-      { name: "password", type: "text" },
-      { name: "strand", type: "text" },
-      { name: "first_name", type: "text" },
-      { name: "last_name", type: "text" },
-      { name: "middle_name", type: "text" },
-      { name: "section", type: "text" },
-      { name: "year", type: "text" },
+      { name: "user_id", type: "link", link: { table: "Users" } },
+      { name: "section_id", type: "link", link: { table: "Sections" } },
+    ],
+    revLinks: [
+      { column: "student_id", table: "Student_Subjects" },
+      { column: "student_id", table: "Grades" },
+      { column: "student_id", table: "Student_Averages" },
     ],
   },
   {
-    name: "instructors",
+    name: "Sections",
     columns: [
-      { name: "password", type: "text" },
-      { name: "first_name", type: "text" },
-      { name: "middle_name", type: "text" },
-      { name: "last_name", type: "text" },
+      { name: "name", type: "text", notNull: true, defaultValue: "" },
+      { name: "year_level", type: "int" },
+    ],
+    revLinks: [
+      { column: "section_id", table: "Students" },
+      { column: "section_id", table: "Teacher_Subjects" },
     ],
   },
   {
-    name: "root",
+    name: "Subjects",
     columns: [
-      {
-        name: "password",
-        type: "text",
-        notNull: true,
-        defaultValue: "rootadmin",
-      },
+      { name: "name", type: "text", notNull: true, defaultValue: "" },
+      { name: "description", type: "text", notNull: true, defaultValue: "" },
+    ],
+    revLinks: [
+      { column: "subject_id", table: "Teacher_Subjects" },
+      { column: "subject_id", table: "Student_Subjects" },
+      { column: "subject_id", table: "Grades" },
     ],
   },
-  { name: "subjects", columns: [] },
+  {
+    name: "Teacher_Subjects",
+    columns: [
+      { name: "teacher_id", type: "link", link: { table: "Teachers" } },
+      { name: "subject_id", type: "link", link: { table: "Subjects" } },
+      { name: "section_id", type: "link", link: { table: "Sections" } },
+    ],
+  },
+  {
+    name: "Student_Subjects",
+    columns: [
+      { name: "student_id", type: "link", link: { table: "Students" } },
+      { name: "subject_id", type: "link", link: { table: "Subjects" } },
+      { name: "teacher_id", type: "link", link: { table: "Teachers" } },
+    ],
+  },
+  {
+    name: "Grades",
+    columns: [
+      { name: "student_id", type: "link", link: { table: "Students" } },
+      { name: "subject_id", type: "link", link: { table: "Subjects" } },
+      { name: "teacher_id", type: "link", link: { table: "Teachers" } },
+      { name: "grade", type: "text" },
+    ],
+  },
+  {
+    name: "Student_Averages",
+    columns: [
+      { name: "student_id", type: "link", link: { table: "Students" } },
+      { name: "average_grade", type: "text" },
+    ],
+  },
+  {
+    name: "Logs",
+    columns: [
+      { name: "user_id", type: "link", link: { table: "Users" } },
+      { name: "action", type: "text" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
+export type Users = InferredTypes["Users"];
+export type UsersRecord = Users & XataRecord;
+
+export type Teachers = InferredTypes["Teachers"];
+export type TeachersRecord = Teachers & XataRecord;
+
 export type Students = InferredTypes["Students"];
 export type StudentsRecord = Students & XataRecord;
 
-export type Instructors = InferredTypes["instructors"];
-export type InstructorsRecord = Instructors & XataRecord;
+export type Sections = InferredTypes["Sections"];
+export type SectionsRecord = Sections & XataRecord;
 
-export type Root = InferredTypes["root"];
-export type RootRecord = Root & XataRecord;
-
-export type Subjects = InferredTypes["subjects"];
+export type Subjects = InferredTypes["Subjects"];
 export type SubjectsRecord = Subjects & XataRecord;
 
+export type TeacherSubjects = InferredTypes["Teacher_Subjects"];
+export type TeacherSubjectsRecord = TeacherSubjects & XataRecord;
+
+export type StudentSubjects = InferredTypes["Student_Subjects"];
+export type StudentSubjectsRecord = StudentSubjects & XataRecord;
+
+export type Grades = InferredTypes["Grades"];
+export type GradesRecord = Grades & XataRecord;
+
+export type StudentAverages = InferredTypes["Student_Averages"];
+export type StudentAveragesRecord = StudentAverages & XataRecord;
+
+export type Logs = InferredTypes["Logs"];
+export type LogsRecord = Logs & XataRecord;
+
 export type DatabaseSchema = {
+  Users: UsersRecord;
+  Teachers: TeachersRecord;
   Students: StudentsRecord;
-  instructors: InstructorsRecord;
-  root: RootRecord;
-  subjects: SubjectsRecord;
+  Sections: SectionsRecord;
+  Subjects: SubjectsRecord;
+  Teacher_Subjects: TeacherSubjectsRecord;
+  Student_Subjects: StudentSubjectsRecord;
+  Grades: GradesRecord;
+  Student_Averages: StudentAveragesRecord;
+  Logs: LogsRecord;
 };
 
 const DatabaseClient = buildClient();

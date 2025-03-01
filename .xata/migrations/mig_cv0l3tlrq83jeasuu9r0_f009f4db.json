@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0l3tlrq83jeasuu9r0",
+  "parentID": "mig_cv0l16q000vn51j3rtf0",
+  "checksum": "1:f009f4db2ded260a9e67ccc90eb8a7c9b31cb1391d112db706f74befdf9d4b70",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "subjects",
+          "type": "multiple"
+        },
+        "table": "root"
+      }
+    }
+  ]
+}

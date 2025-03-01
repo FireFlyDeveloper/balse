@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0pdhi000vn51j3rugg",
+  "parentID": "mig_cv0pddlrq83jeasuuao0",
+  "checksum": "1:327fd70e853126d158d5b74af131f9d7fb24c6fd23c80306217646428d070fce",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "teacher_id",
+          "type": "link",
+          "link": {
+            "table": "Teachers"
+          }
+        },
+        "table": "Grades"
+      }
+    }
+  ]
+}

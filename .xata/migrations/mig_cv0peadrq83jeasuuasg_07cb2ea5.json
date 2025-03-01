@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0peadrq83jeasuuasg",
+  "parentID": "mig_cv0pe55rq83jeasuuarg",
+  "checksum": "1:07cb2ea59effd1bad8d1b776270e1e1243822503fab71016babbe49f7fbcca11",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "average_grade",
+          "type": "text"
+        },
+        "table": "Student_Averages"
+      }
+    }
+  ]
+}

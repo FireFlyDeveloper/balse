@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv0pemq000vn51j3ruk0",
+  "parentID": "mig_cv0pejq000vn51j3ruj0",
+  "checksum": "1:8caf1555aad4a5b52ec353aa6a4b9cca29e2ee7a5a90157e5d55e2be23752042",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "action",
+          "type": "text"
+        },
+        "table": "Logs"
+      }
+    }
+  ]
+}

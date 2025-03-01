@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv0pbvtrq83jeasuuah0",
+  "parentID": "mig_cv0pb5q000vn51j3rueg",
+  "checksum": "1:6eb8e8549e9f7940e92fb67f1730fb1e22fbb0bbcc83081449f9a7e8fbe83310",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "section_id",
+          "type": "link",
+          "link": {
+            "table": "Sections"
+          }
+        },
+        "table": "Teacher_Subjects"
+      }
+    }
+  ]
+}

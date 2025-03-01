@@ -1,0 +1,18 @@
+{
+  "id": "mig_cv0p5g178ur88593t5f0",
+  "parentID": "mig_cv0p58q000vn51j3rubg",
+  "checksum": "1:c84bef298c677d97cdd743d8f54ca46aeda456dee9861bd68910c48343a09863",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "Teachers"
+      }
+    }
+  ]
+}
