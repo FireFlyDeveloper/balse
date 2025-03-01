@@ -29,6 +29,7 @@ router.post("students", (c) => admin.createStudent(c));
 // Course Routes
 router.get("courses", (c) => admin.getAllCourses(c));
 router.post("courses", (c) => admin.createCourse(c));
+router.post("departments/courses", (c) => admin.getCourseDepartment(c));
 
 // Department Routes
 router.get("departments", (c) => admin.getAllDepartments(c));
@@ -39,6 +40,6 @@ router.post("departments/info", (c) => admin.getTeachersDepartment(c));
 // Class Routes
 router.get("classes", (c) => admin.getAllClasses(c));
 router.post("classes", (c) => admin.createClass(c));
-router.post("classes-department", (c) => admin.getClassesDepartment(c));
+router.post("departments/classes", (c) => admin.getClassesDepartment(c));
 
 export default router;

@@ -83,6 +83,15 @@
               <i class="bi bi-grid mr-2"></i> Sections
             </a>
           </li>
+          <li>
+            <a
+              href="#courses"
+              onclick="showSection('courses')"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-book mr-2"></i> Courses
+            </a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -143,6 +152,70 @@
             </table>
           </div>
         </div>
+
+        <!-- Courses Section -->
+        <div id="courses" class="fade-in hidden-section">
+          <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
+            <i class="bi bi-book mr-2 theme-blue mr-2"></i> Courses in this
+            Department
+          </h3>
+          <button
+            onclick="openCourseModal()"
+            class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition mb-4"
+          >
+            <i class="bi bi-plus-lg mr-2"></i> Create Course
+          </button>
+          <div class="overflow-x-auto">
+            <table class="w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-blue-800 text-white">
+                <tr>
+                  <th class="p-4 text-left">Course Name</th>
+                </tr>
+              </thead>
+              <tbody id="courseTableBody" class="divide-y divide-blue-100">
+                <!-- Courses will be inserted dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Course Modal -->
+    <div
+      id="createCourseModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">Create Course</h2>
+        <form id="createCourseForm">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Course Name</label
+            >
+            <input
+              type="text"
+              name="course_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button
+              type="button"
+              onclick="closeCourseModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition"
+            >
+              Create
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -163,12 +236,14 @@
       // Section visibility control
       function showSection(sectionId) {
         // Hide all sections except the department-info container
-        document.querySelectorAll("#teachers, #sections").forEach((div) => {
-          div.classList.toggle("hidden-section", div.id !== sectionId);
-        });
+        document
+          .querySelectorAll("#teachers, #sections, #courses")
+          .forEach((div) => {
+            div.classList.toggle("hidden-section", div.id !== sectionId);
+          });
       }
 
-      // Load department information, teachers, and sections
+      // Load department information, teachers, sections, and courses
       async function loadDepartmentInfo() {
         const departmentId = window.location.pathname.split("/").pop(); // Extract ID from URL
 
@@ -202,7 +277,7 @@
             .join("");
 
           // Fetch sections for this department
-          const sectionsData = await fetchData(`/classes-department`, {
+          const sectionsData = await fetchData(`/departments/classes`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: departmentId }),
@@ -219,9 +294,61 @@
               `,
             )
             .join("");
+
+          // Fetch courses for this department
+          const coursesData = await fetchData(`/departments/courses`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: departmentId }),
+          });
+
+          // Display courses
+          const courseTableBody = document.getElementById("courseTableBody");
+          courseTableBody.innerHTML = coursesData.data
+            .map(
+              (course) => `
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                  <td class="p-4">${course.course_name}</td>
+                </tr>
+              `,
+            )
+            .join("");
         } catch (error) {
           console.error("Loading department info failed:", error);
           alert("Failed to load department information. Please try again.");
+        }
+      }
+
+      // Course modal controls
+      function openCourseModal() {
+        document.getElementById("createCourseModal").classList.remove("hidden");
+      }
+
+      function closeCourseModal() {
+        document.getElementById("createCourseModal").classList.add("hidden");
+      }
+
+      // Handle course form submission
+      async function handleCourseForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const departmentId = window.location.pathname.split("/").pop();
+
+        try {
+          await fetchData(`/courses`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: formData.get("course_name"),
+              departmentId: departmentId,
+            }),
+          });
+
+          alert("Course created successfully!");
+          closeCourseModal();
+          await loadDepartmentInfo(); // Refresh the courses list
+        } catch (error) {
+          alert(error.message || "Failed to create course");
         }
       }
 
@@ -242,6 +369,11 @@
         await loadDepartmentInfo();
         showSection("teachers"); // Default to showing teachers section
       })();
+
+      // Event listeners
+      document
+        .getElementById("createCourseForm")
+        .addEventListener("submit", handleCourseForm);
     </script>
   </body>
 </html>

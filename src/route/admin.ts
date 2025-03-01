@@ -227,8 +227,30 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { id, name, departmentId } = await c.req.json();
+      const { name, departmentId } = await c.req.json();
+
+      const id = this.textToNumbers(`${name}+${departmentId}`);
+
       const course = await this.db.addCourse(id, name, departmentId);
+
+      return c.json({ loggedIn: true, data: course });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getCourseDepartment(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const course = await this.db.getCourseDepartment(id);
 
       return c.json({ loggedIn: true, data: course });
     } catch (error) {
