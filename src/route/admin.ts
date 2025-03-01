@@ -118,8 +118,23 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { id, ...data } = await c.req.json();
-      const student = await this.db.createStudent(id, data);
+      const { first_name, middle_name, last_name, date_of_birth, lrn } =
+        await c.req.json();
+
+      const password = `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`;
+
+      const enrollment_date = new Date().toISOString();
+
+      const data = {
+        first_name,
+        middle_name,
+        last_name,
+        date_of_birth,
+        password_hash: password,
+        enrollment_date,
+      };
+
+      const student = await this.db.createStudent(lrn, data);
 
       return c.json({ loggedIn: true, data: student });
     } catch (error) {

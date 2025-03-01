@@ -198,9 +198,29 @@
         class="bg-white rounded-xl shadow-lg p-6 fade-in hidden-section"
       >
         <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
-          <i class="bi bi-people mr-2 theme-blue mr-2"></i> students
+          <i class="bi bi-people mr-2 theme-blue mr-2"></i> Students
         </h2>
-        <p>Students content goes here.</p>
+        <button
+          onclick="openStudentModal()"
+          class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition mb-4"
+        >
+          <i class="bi bi-plus-lg mr-2"></i> Create Student
+        </button>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-white rounded-lg shadow-sm">
+            <thead class="bg-blue-800 text-white">
+              <tr>
+                <th class="p-4 text-left">LRN</th>
+                <th class="p-4 text-left">First Name</th>
+                <th class="p-4 text-left">Middle Name</th>
+                <th class="p-4 text-left">Last Name</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody" class="divide-y divide-blue-100">
+              <!-- Students will be inserted dynamically -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -362,6 +382,80 @@
         </form>
       </div>
     </div>
+
+    <!-- Create Students Modal -->
+    <div
+      id="createStudentModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">Create Student</h2>
+        <form id="createStudentForm">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Learner Reference Number (LRN)</label
+            >
+            <input
+              type="text"
+              name="student_lrn"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            <label class="block text-sm font-medium text-gray-700"
+              >First Name</label
+            >
+            <input
+              type="text"
+              name="first_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            <label class="block text-sm font-medium text-gray-700"
+              >Middle Name</label
+            >
+            <input
+              type="text"
+              name="middle_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            <label class="block text-sm font-medium text-gray-700"
+              >Last Name</label
+            >
+            <input
+              type="text"
+              name="last_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            <label class="block text-sm font-medium text-gray-700"
+              >Date of Birth</label
+            >
+            <input
+              type="text"
+              name="date_of_birth"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button
+              type="button"
+              onclick="closeStudentModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
     <script>
       let departments = []; // Store departments for dropdowns
     
@@ -481,6 +575,33 @@
           alert("Failed to load teachers. Please try again.");
         }
       }
+
+      // Student management
+      async function loadStudents() {
+        try {
+          const data = await fetchData("/students", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+    
+          const tableBody = document.getElementById("studentTableBody");
+          tableBody.innerHTML = data.data
+            .map((student) => {
+              return `
+                    <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                      <td class="p-4">${student.id}</td>
+                      <td class="p-4">${student.first_name}</td>
+                      <td class="p-4">${student.middle_name || ""}</td>
+                      <td class="p-4">${student.last_name}</td>
+                    </tr>
+                  `;
+            })
+            .join("");
+        } catch (error) {
+          console.error("Student loading failed:", error);
+          alert("Failed to load students. Please try again.");
+        }
+      }
     
       // Form handlers
       async function handleDepartmentForm(event) {
@@ -547,6 +668,31 @@
           alert(error.message || "Failed to create teacher");
         }
       }
+
+      async function handleStudentForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+    
+        try {
+          await fetchData("/students", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              first_name: formData.get("first_name"),
+              middle_name: formData.get("middle_name"),
+              last_name: formData.get("last_name"),
+              date_of_birth: formData.get("date_of_birth"),
+              lrn: formData.get("student_lrn"),
+            }),
+          });
+    
+          alert("Student created successfully!");
+          closeStudentModal();
+          await loadStudents(); // Refresh student list
+        } catch (error) {
+          alert(error.message || "Failed to create student");
+        }
+      }
     
       // Modal controls
       function openDepartmentModal() {
@@ -572,12 +718,21 @@
       function closeTeacherModal() {
         document.getElementById("createTeacherModal").classList.add("hidden");
       }
+
+      function openStudentModal() {
+        document.getElementById("createStudentModal").classList.remove("hidden");
+      }
+    
+      function closeStudentModal() {
+        document.getElementById("createStudentModal").classList.add("hidden");
+      }
     
       // Initial data load
       (async () => {
         await loadDepartments();
         await loadSections();
         await loadTeachers();
+        await loadStudents();
       })();
     
       // Logout handler
@@ -596,6 +751,7 @@
       document.getElementById("createDepartmentForm").addEventListener("submit", handleDepartmentForm);
       document.getElementById("createSectionForm").addEventListener("submit", handleSectionForm);
       document.getElementById("createTeacherForm").addEventListener("submit", handleTeacherForm);
+      document.getElementById("createStudentForm").addEventListener("submit", handleStudentForm);
     </script>
   </body>
 </html>
