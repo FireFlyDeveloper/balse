@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17kd978ur88593t9l0",
+  "parentID": "mig_cv17kah78ur88593t9k0",
+  "checksum": "1:7190215c69e9964b993dfabb688755b64f11013102739580a79a39030e6e568a",
+  "operations": [
+    {
+      "removeTable": {
+        "table": "Student_Averages"
+      }
+    }
+  ]
+}

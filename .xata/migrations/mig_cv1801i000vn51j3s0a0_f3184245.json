@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv1801i000vn51j3s0a0",
+  "parentID": "mig_cv17vup78ur88593tak0",
+  "checksum": "1:f3184245a0caccb8afdf37b257a25e4359ec88bad06d95ebe765ad15199029a9",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "date_recorded",
+          "type": "text"
+        },
+        "table": "Grades"
+      }
+    }
+  ]
+}

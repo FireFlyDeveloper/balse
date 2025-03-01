@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17mt2000vn51j3rvkg",
+  "parentID": "mig_cv17m5h78ur88593t9sg",
+  "checksum": "1:6e9e724cd3532026ff9283e69ac2f45855752536d52868b56b7d5bce718e260c",
+  "operations": [
+    {
+      "removeTable": {
+        "table": "Teachers"
+      }
+    }
+  ]
+}

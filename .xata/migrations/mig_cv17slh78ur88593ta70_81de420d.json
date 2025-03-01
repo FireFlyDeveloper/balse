@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17slh78ur88593ta70",
+  "parentID": "mig_cv17sja000vn51j3rvsg",
+  "checksum": "1:81de420d7c527f3783fa6aee9f93d83b63df5592ab375568247f0ebad79caa61",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "email",
+          "type": "text"
+        },
+        "table": "Teachers"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17uvp78ur88593tah0",
+  "parentID": "mig_cv17urtrq83jeasuudqg",
+  "checksum": "1:478f7ba95c2b7fe2be59126c5f999a0729146fcad40a579d751332e088a7db5c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "student_id",
+          "type": "link",
+          "link": {
+            "table": "Students"
+          }
+        },
+        "table": "Enrollments"
+      }
+    }
+  ]
+}

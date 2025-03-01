@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17tj178ur88593tac0",
+  "parentID": "mig_cv17tfi000vn51j3s00g",
+  "checksum": "1:24c81911e8aea29681cc3a7f5a15bf683ade0f59faadaa8ea7486316ec4ccfd5",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Departments"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17qv978ur88593t9u0",
+  "parentID": "mig_cv17mui000vn51j3rvlg",
+  "checksum": "1:7e0d823be06c78fb1101aca2ede0cdab89dc745472d17c12e3a1f016407427a9",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Students"
+      }
+    }
+  ]
+}

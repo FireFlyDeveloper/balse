@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17ri178ur88593ta20",
+  "parentID": "mig_cv17rei000vn51j3rvmg",
+  "checksum": "1:613e501cf7dc5ff043f9386343cf282f26ec58cf92c0bcdf32f8783b0abf1e6f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password_hash",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

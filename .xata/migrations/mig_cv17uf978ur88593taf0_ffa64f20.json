@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17uf978ur88593taf0",
+  "parentID": "mig_cv17ucq000vn51j3s04g",
+  "checksum": "1:ffa64f2039ebe27b8dae7a8b2748c0f5bf57b7d2314ff4f9e3e7ddeaa7660459",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "course_name",
+          "type": "text"
+        },
+        "table": "Courses"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "mig_cv17ll2000vn51j3rvj0",
+  "parentID": "mig_cv17lcq000vn51j3rvi0",
+  "checksum": "1:5f7509038b89c82d7a0c91f21b2ef15d43b9b1e53ffb39390c4142e2bea47172",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "username",
+          "type": "text",
+          "defaultValue": ""
+        },
+        "table": "Users"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17m0h78ur88593t9r0",
+  "parentID": "mig_cv17lt178ur88593t9o0",
+  "checksum": "1:9a45196eea3a4f97862b9648f7aab36ba1ed95e9b7eb451085fdc7b03ffcf32e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "role",
+          "type": "text"
+        },
+        "table": "Users"
+      }
+    }
+  ]
+}

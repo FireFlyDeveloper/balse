@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17vup78ur88593tak0",
+  "parentID": "mig_cv17vrq000vn51j3s090",
+  "checksum": "1:a61d8a6c3391ca9ffd079e84bc27114956a6580a343d355dc89ed4c95f20f5cf",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "grading_period",
+          "type": "text"
+        },
+        "table": "Grades"
+      }
+    }
+  ]
+}

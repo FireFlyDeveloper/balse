@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17r4p78ur88593t9v0",
+  "parentID": "mig_cv17qv978ur88593t9u0",
+  "checksum": "1:01ed7fe66c2197b8ad83bf2b511d89f5aab46ac7343ab39bf88d911cbcb90f13",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "first_name",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

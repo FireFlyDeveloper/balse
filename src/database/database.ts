@@ -7,95 +7,79 @@ export default class Database {
     this.client = getXataClient();
   }
 
-  /** USERS **/
-  async getUserById(id: string) {
-    return await this.client.db.Users.read(id);
-  }
-
-  async createUser(data: any) {
-    return await this.client.db.Users.create(`${data.username}`, data);
-  }
-
-  /** TEACHERS **/
-  async getAllTeachers() {
-    return await this.client.db.Teachers.getAll();
-  }
-
-  async assignTeacherToSubject(
-    teacherId: string,
-    subjectId: string,
-    sectionId: string,
-  ) {
-    return await this.client.db.Teacher_Subjects.create({
-      teacher_id: teacherId,
-      subject_id: subjectId,
-      section_id: sectionId,
-    });
-  }
-
   /** STUDENTS **/
+  async createStudent(id: string, data: any) {
+    return await this.client.db.Students.create(id, data);
+  }
+
   async getAllStudents() {
     return await this.client.db.Students.getAll();
   }
 
-  async enrollStudent(studentId: string, subjectId: string, teacherId: string) {
-    return await this.client.db.Student_Subjects.create({
-      student_id: studentId,
-      subject_id: subjectId,
-      teacher_id: teacherId,
+  /** TEACHERS **/
+  async createTeacher(id: string, data: any) {
+    return await this.client.db.Teachers.create(id, data);
+  }
+
+  async getAllTeachers() {
+    return await this.client.db.Teachers.getAll();
+  }
+
+  /** COURSES **/
+  async addCourse(id: string, name: string, departmentId: string) {
+    return await this.client.db.Courses.create(id, {
+      course_name: name,
+      department_id: departmentId
     });
   }
 
-  /** SUBJECTS **/
-  async getAllSubjects() {
-    return await this.client.db.Subjects.getAll();
+  /** DEPARTMENTS **/
+  async addDepartment(id: string, name: string) {
+    return await this.client.db.Departments.create(id, {
+      department_name: name
+    });
   }
 
-  async addSubject(name: string, description: string) {
-    return await this.client.db.Subjects.create({ name, description });
+  /** CLASSES **/
+  async addClass(id: string, name: string, departmentId: string) {
+    return await this.client.db.Classes.create(id, {
+      class_name: name,
+      department_id: departmentId
+    });
   }
 
-  /** SECTIONS **/
-  async getAllSections() {
-    return await this.client.db.Sections.getAll();
-  }
-
-  async addSection(name: string, yearLevel: number) {
-    return await this.client.db.Sections.create({
-      name,
-      year_level: yearLevel,
+  /** ENROLLMENTS **/
+  async enrollStudent(id: string, studentId: string, courseId: string) {
+    return await this.client.db.Enrollments.create(id, {
+      student_id: studentId,
+      course_id: courseId,
+      enrollment_date: new Date().toISOString()
     });
   }
 
   /** GRADES **/
-  async addGrade(
-    studentId: string,
-    subjectId: string,
-    teacherId: string,
-    grade: number,
-  ) {
-    return await this.client.db.Grades.create({
+  async addGrade(id: string, studentId: string, courseId: string, grade: number, gradingPeriod: string) {
+    return await this.client.db.Grades.create(id, {
       student_id: studentId,
-      subject_id: subjectId,
-      teacher_id: teacherId,
+      course_id: courseId,
       grade,
+      grading_period: gradingPeriod,
+      date_recorded: new Date().toISOString()
     });
   }
 
-  async getStudentGrades(studentId: string) {
-    return await this.client.db.Grades.filter({
-      student_id: studentId,
-    }).getAll();
+  /** ADMINISTRATORS **/
+  async createAdmin(id: string, data: any) {
+    return await this.client.db.Admins.create(id, data);
   }
 
+  /** UTILITY METHODS **/
   async calculateStudentAverage(studentId: string) {
-    const grades = await this.getStudentGrades(studentId);
-    const avg =
-      grades.reduce((sum: number, record: any) => sum + record.grade, 0) /
-      grades.length;
-    return await this.client.db.Student_Averages.create({
-      student_id: studentId,
-      average_grade: avg,
-    });
+    const grades = await this.client.db.Grades
+      .filter({ student_id: studentId })
+      .getAll();
+      
+    const total = grades.reduce((sum: number, grade: any) => sum + grade.grade, 0);
+    return total / grades.length;
   }
 }

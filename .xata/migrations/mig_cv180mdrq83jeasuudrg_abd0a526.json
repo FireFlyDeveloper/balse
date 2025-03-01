@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv180mdrq83jeasuudrg",
+  "parentID": "mig_cv1801i000vn51j3s0a0",
+  "checksum": "1:abd0a526304629792c9bb10ab390ce948422a728028c381ab0f9782e3396d7c1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "class_id",
+          "type": "link",
+          "link": {
+            "table": "Classes"
+          }
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

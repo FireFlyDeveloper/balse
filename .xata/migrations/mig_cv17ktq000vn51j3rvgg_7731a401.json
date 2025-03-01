@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17ktq000vn51j3rvgg",
+  "parentID": "mig_cv17kslrq83jeasuudl0",
+  "checksum": "1:7731a40158d4a719f346009ecba44124427b6e00ae7ec64dd84a03fccc547902",
+  "operations": [
+    {
+      "removeTable": {
+        "table": "Subjects"
+      }
+    }
+  ]
+}

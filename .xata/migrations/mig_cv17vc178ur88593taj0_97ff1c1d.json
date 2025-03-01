@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17vc178ur88593taj0",
+  "parentID": "mig_cv17v8p78ur88593tai0",
+  "checksum": "1:97ff1c1de6cb47b0d8fd88b3a91b336644eecebb4754a1843bb49093cf7a0e74",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "enrollment_date",
+          "type": "text"
+        },
+        "table": "Enrollments"
+      }
+    }
+  ]
+}

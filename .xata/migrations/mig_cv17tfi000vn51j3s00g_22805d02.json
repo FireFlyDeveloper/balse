@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17tfi000vn51j3s00g",
+  "parentID": "mig_cv17tcq000vn51j3rvvg",
+  "checksum": "1:22805d02f4dc893de441488e314cf63e0115487ed21fece6482cd89e7e78e5e6",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password_hash",
+          "type": "text"
+        },
+        "table": "Admins"
+      }
+    }
+  ]
+}

@@ -8,106 +8,89 @@ import type {
 
 const tables = [
   {
-    name: "Users",
+    name: "Students",
     columns: [
-      { name: "username", type: "text", notNull: true, defaultValue: "" },
-      { name: "password", type: "text", notNull: true, defaultValue: "" },
-      { name: "role", type: "text", notNull: true, defaultValue: "" },
+      { name: "first_name", type: "text" },
+      { name: "last_name", type: "text" },
+      { name: "middle_name", type: "text" },
+      { name: "email", type: "text" },
+      { name: "password_hash", type: "text" },
+      { name: "date_of_birth", type: "text" },
+      { name: "enrollment_date", type: "text" },
+      { name: "class_id", type: "link", link: { table: "Classes" } },
     ],
     revLinks: [
-      { column: "user_id", table: "Teachers" },
-      { column: "user_id", table: "Students" },
-      { column: "user_id", table: "Logs" },
+      { column: "student_id", table: "Enrollments" },
+      { column: "student_id", table: "Grades" },
     ],
   },
   {
     name: "Teachers",
     columns: [
-      { name: "name", type: "text", notNull: true, defaultValue: "" },
-      { name: "user_id", type: "link", link: { table: "Users" } },
+      { name: "first_name", type: "text" },
+      { name: "last_name", type: "text" },
+      { name: "middle_name", type: "text" },
       { name: "email", type: "text" },
+      { name: "password_hash", type: "text" },
+      { name: "department_id", type: "link", link: { table: "Departments" } },
     ],
-    revLinks: [
-      { column: "teacher_id", table: "Teacher_Subjects" },
-      { column: "teacher_id", table: "Student_Subjects" },
-      { column: "teacher_id", table: "Grades" },
-    ],
+    revLinks: [{ column: "teacher_id", table: "Courses" }],
   },
   {
-    name: "Students",
+    name: "Admins",
     columns: [
-      { name: "name", type: "text", notNull: true, defaultValue: "" },
-      { name: "year_level", type: "int" },
+      { name: "first_name", type: "text" },
+      { name: "last_name", type: "text" },
+      { name: "middle_name", type: "text" },
       { name: "email", type: "text" },
-      { name: "user_id", type: "link", link: { table: "Users" } },
-      { name: "section_id", type: "link", link: { table: "Sections" } },
-    ],
-    revLinks: [
-      { column: "student_id", table: "Student_Subjects" },
-      { column: "student_id", table: "Grades" },
-      { column: "student_id", table: "Student_Averages" },
+      { name: "password_hash", type: "text" },
     ],
   },
   {
-    name: "Sections",
-    columns: [
-      { name: "name", type: "text", notNull: true, defaultValue: "" },
-      { name: "year_level", type: "int" },
-    ],
+    name: "Departments",
+    columns: [{ name: "department_name", type: "text" }],
     revLinks: [
-      { column: "section_id", table: "Students" },
-      { column: "section_id", table: "Teacher_Subjects" },
+      { column: "department_id", table: "Classes" },
+      { column: "department_id", table: "Courses" },
+      { column: "department_id", table: "Teachers" },
     ],
   },
   {
-    name: "Subjects",
+    name: "Classes",
     columns: [
-      { name: "name", type: "text", notNull: true, defaultValue: "" },
-      { name: "description", type: "text", notNull: true, defaultValue: "" },
+      { name: "class_name", type: "text" },
+      { name: "department_id", type: "link", link: { table: "Departments" } },
     ],
-    revLinks: [
-      { column: "subject_id", table: "Teacher_Subjects" },
-      { column: "subject_id", table: "Student_Subjects" },
-      { column: "subject_id", table: "Grades" },
-    ],
+    revLinks: [{ column: "class_id", table: "Students" }],
   },
   {
-    name: "Teacher_Subjects",
+    name: "Courses",
     columns: [
+      { name: "course_name", type: "text" },
+      { name: "department_id", type: "link", link: { table: "Departments" } },
       { name: "teacher_id", type: "link", link: { table: "Teachers" } },
-      { name: "subject_id", type: "link", link: { table: "Subjects" } },
-      { name: "section_id", type: "link", link: { table: "Sections" } },
+    ],
+    revLinks: [
+      { column: "course_id", table: "Enrollments" },
+      { column: "course_id", table: "Grades" },
     ],
   },
   {
-    name: "Student_Subjects",
+    name: "Enrollments",
     columns: [
       { name: "student_id", type: "link", link: { table: "Students" } },
-      { name: "subject_id", type: "link", link: { table: "Subjects" } },
-      { name: "teacher_id", type: "link", link: { table: "Teachers" } },
+      { name: "course_id", type: "link", link: { table: "Courses" } },
+      { name: "enrollment_date", type: "text" },
     ],
   },
   {
     name: "Grades",
     columns: [
       { name: "student_id", type: "link", link: { table: "Students" } },
-      { name: "subject_id", type: "link", link: { table: "Subjects" } },
-      { name: "teacher_id", type: "link", link: { table: "Teachers" } },
+      { name: "course_id", type: "link", link: { table: "Courses" } },
       { name: "grade", type: "text" },
-    ],
-  },
-  {
-    name: "Student_Averages",
-    columns: [
-      { name: "student_id", type: "link", link: { table: "Students" } },
-      { name: "average_grade", type: "text" },
-    ],
-  },
-  {
-    name: "Logs",
-    columns: [
-      { name: "user_id", type: "link", link: { table: "Users" } },
-      { name: "action", type: "text" },
+      { name: "grading_period", type: "text" },
+      { name: "date_recorded", type: "text" },
     ],
   },
 ] as const;
@@ -115,47 +98,39 @@ const tables = [
 export type SchemaTables = typeof tables;
 export type InferredTypes = SchemaInference<SchemaTables>;
 
-export type Users = InferredTypes["Users"];
-export type UsersRecord = Users & XataRecord;
+export type Students = InferredTypes["Students"];
+export type StudentsRecord = Students & XataRecord;
 
 export type Teachers = InferredTypes["Teachers"];
 export type TeachersRecord = Teachers & XataRecord;
 
-export type Students = InferredTypes["Students"];
-export type StudentsRecord = Students & XataRecord;
+export type Admins = InferredTypes["Admins"];
+export type AdminsRecord = Admins & XataRecord;
 
-export type Sections = InferredTypes["Sections"];
-export type SectionsRecord = Sections & XataRecord;
+export type Departments = InferredTypes["Departments"];
+export type DepartmentsRecord = Departments & XataRecord;
 
-export type Subjects = InferredTypes["Subjects"];
-export type SubjectsRecord = Subjects & XataRecord;
+export type Classes = InferredTypes["Classes"];
+export type ClassesRecord = Classes & XataRecord;
 
-export type TeacherSubjects = InferredTypes["Teacher_Subjects"];
-export type TeacherSubjectsRecord = TeacherSubjects & XataRecord;
+export type Courses = InferredTypes["Courses"];
+export type CoursesRecord = Courses & XataRecord;
 
-export type StudentSubjects = InferredTypes["Student_Subjects"];
-export type StudentSubjectsRecord = StudentSubjects & XataRecord;
+export type Enrollments = InferredTypes["Enrollments"];
+export type EnrollmentsRecord = Enrollments & XataRecord;
 
 export type Grades = InferredTypes["Grades"];
 export type GradesRecord = Grades & XataRecord;
 
-export type StudentAverages = InferredTypes["Student_Averages"];
-export type StudentAveragesRecord = StudentAverages & XataRecord;
-
-export type Logs = InferredTypes["Logs"];
-export type LogsRecord = Logs & XataRecord;
-
 export type DatabaseSchema = {
-  Users: UsersRecord;
-  Teachers: TeachersRecord;
   Students: StudentsRecord;
-  Sections: SectionsRecord;
-  Subjects: SubjectsRecord;
-  Teacher_Subjects: TeacherSubjectsRecord;
-  Student_Subjects: StudentSubjectsRecord;
+  Teachers: TeachersRecord;
+  Admins: AdminsRecord;
+  Departments: DepartmentsRecord;
+  Classes: ClassesRecord;
+  Courses: CoursesRecord;
+  Enrollments: EnrollmentsRecord;
   Grades: GradesRecord;
-  Student_Averages: StudentAveragesRecord;
-  Logs: LogsRecord;
 };
 
 const DatabaseClient = buildClient();

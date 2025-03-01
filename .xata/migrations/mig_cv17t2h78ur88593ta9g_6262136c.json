@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17t2h78ur88593ta9g",
+  "parentID": "mig_cv17sq978ur88593ta80",
+  "checksum": "1:6262136cd29f7e140c6b66d411c2cc39f41a0e852de820224028613c838ca707",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Admins"
+      }
+    }
+  ]
+}

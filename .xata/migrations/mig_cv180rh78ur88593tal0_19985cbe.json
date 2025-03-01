@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv180rh78ur88593tal0",
+  "parentID": "mig_cv180mdrq83jeasuudrg",
+  "checksum": "1:19985cbeeef4b0596f00495be643833e49867f3ebda08226c5ecf57aa2af7c5d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "department_id",
+          "type": "link",
+          "link": {
+            "table": "Departments"
+          }
+        },
+        "table": "Teachers"
+      }
+    }
+  ]
+}

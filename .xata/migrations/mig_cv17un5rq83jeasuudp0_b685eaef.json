@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17un5rq83jeasuudp0",
+  "parentID": "mig_cv17ujp78ur88593tag0",
+  "checksum": "1:b685eaef88b818b95aa9c1e418d4563d436f31dfa166a130a493e11dd3fea38f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "teacher_id",
+          "type": "link",
+          "link": {
+            "table": "Teachers"
+          }
+        },
+        "table": "Courses"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17ujp78ur88593tag0",
+  "parentID": "mig_cv17uf978ur88593taf0",
+  "checksum": "1:0f838a7ba572a05ebfc2b34e72fb2fda4bafef9f810f24e5f51d7526ca8eb232",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "department_id",
+          "type": "link",
+          "link": {
+            "table": "Departments"
+          }
+        },
+        "table": "Courses"
+      }
+    }
+  ]
+}

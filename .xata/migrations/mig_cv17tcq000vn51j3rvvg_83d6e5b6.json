@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17tcq000vn51j3rvvg",
+  "parentID": "mig_cv17taa000vn51j3rvug",
+  "checksum": "1:83d6e5b6990f252a57960947897a6dd4801559d2bf675189ea89aaa9989fabe6",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "email",
+          "type": "text"
+        },
+        "table": "Admins"
+      }
+    }
+  ]
+}

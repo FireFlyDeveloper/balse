@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17sq978ur88593ta80",
+  "parentID": "mig_cv17slh78ur88593ta70",
+  "checksum": "1:e90f983d460b92bb2759ae8bbbd330591dafcd78f95469efa48d4e69a10bfe7d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password_hash",
+          "type": "text"
+        },
+        "table": "Teachers"
+      }
+    }
+  ]
+}

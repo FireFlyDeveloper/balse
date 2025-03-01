@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17v8p78ur88593tai0",
+  "parentID": "mig_cv17uvp78ur88593tah0",
+  "checksum": "1:3a07c743d0c88be5ec6cd5b86d203f60ece71a80c498e4ceb06854b0809718ad",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "course_id",
+          "type": "link",
+          "link": {
+            "table": "Courses"
+          }
+        },
+        "table": "Enrollments"
+      }
+    }
+  ]
+}

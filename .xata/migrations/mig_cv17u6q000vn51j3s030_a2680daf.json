@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17u6q000vn51j3s030",
+  "parentID": "mig_cv17tv978ur88593tae0",
+  "checksum": "1:a2680daf947381d2ac6baad6f3d98fb8c854bfeda541273506d6a539d2ae15b1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "department_id",
+          "type": "link",
+          "link": {
+            "table": "Departments"
+          }
+        },
+        "table": "Classes"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17rla000vn51j3rvng",
+  "parentID": "mig_cv17ri178ur88593ta20",
+  "checksum": "1:8ed71cfd92c965e159e999860fd34fa9f6588ff13e492ea25f104c5d211c7b69",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "date_of_birth",
+          "type": "text"
+        },
+        "table": "Students"
+      }
+    }
+  ]
+}

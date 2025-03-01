@@ -1,0 +1,19 @@
+{
+  "id": "mig_cv17vni000vn51j3s080",
+  "parentID": "mig_cv17vji000vn51j3s070",
+  "checksum": "1:9a6e98ea23600517e6ebf8cdfd00fc0013a83dd5c73b96c040aea624437c95f0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "course_id",
+          "type": "link",
+          "link": {
+            "table": "Courses"
+          }
+        },
+        "table": "Grades"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17urtrq83jeasuudqg",
+  "parentID": "mig_cv17un5rq83jeasuudp0",
+  "checksum": "1:968167018132e49e91f425f863cbc88b60bc119373f4451e0d63ca7557a2cd29",
+  "operations": [
+    {
+      "addTable": {
+        "table": "Enrollments"
+      }
+    }
+  ]
+}

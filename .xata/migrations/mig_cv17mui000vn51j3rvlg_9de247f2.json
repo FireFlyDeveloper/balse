@@ -1,0 +1,12 @@
+{
+  "id": "mig_cv17mui000vn51j3rvlg",
+  "parentID": "mig_cv17mt2000vn51j3rvkg",
+  "checksum": "1:9de247f20bcfc549168a60d75bf8f70b64391da476d0923428ad8e60ae919245",
+  "operations": [
+    {
+      "removeTable": {
+        "table": "Users"
+      }
+    }
+  ]
+}

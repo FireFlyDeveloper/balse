@@ -1,0 +1,16 @@
+{
+  "id": "mig_cv17sfp78ur88593ta60",
+  "parentID": "mig_cv17sda000vn51j3rvrg",
+  "checksum": "1:7431677daa8923a8a5f7b8836493916fafe99b31ef6ff944f6b5560f45e70b89",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "last_name",
+          "type": "text"
+        },
+        "table": "Teachers"
+      }
+    }
+  ]
+}
