@@ -146,7 +146,13 @@ export default class Database {
   }
 
   /** GRADES **/
-  async addGrade(id: string, studentId: string, courseId: string, grade: number, gradingPeriod: string) {
+  async addGrade(
+    id: string,
+    studentId: string,
+    courseId: string,
+    grade: number,
+    gradingPeriod: string,
+  ) {
     return await this.client.db.Grades.create(id, {
       student_id: studentId,
       course_id: courseId,
@@ -200,7 +206,10 @@ export default class Database {
   /** UTILITY METHODS **/
   async calculateStudentAverage(studentId: string) {
     const grades = await this.getGradesByStudent(studentId);
-    const total = grades.reduce((sum: number, grade: any) => sum + grade.grade, 0);
+    const total = grades.reduce(
+      (sum: number, grade: any) => sum + grade.grade,
+      0,
+    );
     return total / grades.length;
   }
 }

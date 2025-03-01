@@ -6,7 +6,8 @@ class Login extends Router {
   async students_login(c: Context) {
     try {
       const session = c.get("session");
-      if (!session.get("loggedIn") || session.get("role") !== Role.Student) {
+
+      if (!this.isStudent(session)) {
         return c.redirect("/login");
       }
 
@@ -21,7 +22,8 @@ class Login extends Router {
   async teachers_login(c: Context) {
     try {
       const session = c.get("session");
-      if (!session.get("loggedIn") || session.get("role") !== Role.Teacher) {
+
+      if (!this.isTeacher(session)) {
         return c.redirect("/login-admin");
       }
 
@@ -36,7 +38,8 @@ class Login extends Router {
   async admin_login(c: Context) {
     try {
       const session = c.get("session");
-      if (!session.get("loggedIn") || session.get("role") !== Role.Admin) {
+
+      if (!this.isAdmin(session)) {
         return c.redirect("/login-root");
       }
 
@@ -69,6 +72,7 @@ class Login extends Router {
         session.set("role", Role.Student);
         return c.redirect("/student");
       }
+
       return c.json(
         { success: false, message: "Invalid username or password" },
         401,
@@ -100,6 +104,7 @@ class Login extends Router {
         session.set("role", Role.Teacher);
         return c.redirect("/teacher");
       }
+
       return c.json(
         { success: false, message: "Invalid username or password" },
         401,
@@ -131,6 +136,7 @@ class Login extends Router {
         session.set("role", Role.Admin);
         return c.redirect("/admin");
       }
+
       return c.json(
         { success: false, message: "Invalid username or password" },
         401,
