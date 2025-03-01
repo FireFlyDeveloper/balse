@@ -2,6 +2,22 @@ import { Context } from "hono";
 import Router from ".";
 
 class Admin extends Router {
+  async admin(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.redirect("/login-admin");
+      }
+
+      const html = await this.rf(`${this.dir}/admin_dashboard.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** TEACHERS **/
   async getAllTeachers(c: Context) {
     try {

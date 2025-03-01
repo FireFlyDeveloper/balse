@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import Database from "../database/database";
 import { Role } from "../models/types";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 export default abstract class Router {
   public dir: string = "./src/html";
@@ -32,7 +32,10 @@ export default abstract class Router {
     return hashedPassword;
   }
 
-  public async verifyPassword(password: string, hash: string): Promise<boolean> {
+  public async verifyPassword(
+    password: string,
+    hash: string,
+  ): Promise<boolean> {
     return await bcrypt.compare(password, hash);
   }
 }
