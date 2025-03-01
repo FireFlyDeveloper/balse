@@ -17,6 +17,8 @@ router.get("login-admin", (c) => login.admin_login(c));
 router.post("login-admin", (c) => login.admin_api(c));
 
 // ############## Admin Routes ############## //
+router.get("admin", (c) => admin.admin(c));
+
 router.get("teachers", (c) => admin.getAllTeachers(c));
 router.post("teachers", (c) => admin.createTeacher(c));
 
