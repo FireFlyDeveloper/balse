@@ -25,8 +25,6 @@ app.use(
   }),
 );
 
-app.route("/", router);
-
 app.post("/logout", async (c: Context) => {
   const session = c.get("session");
   session.forget("id");
@@ -37,6 +35,8 @@ app.post("/logout", async (c: Context) => {
 app.get("/", (c: Context) => {
   return c.redirect("/login");
 });
+
+app.route("/", router);
 
 export default {
   port: 3001,
