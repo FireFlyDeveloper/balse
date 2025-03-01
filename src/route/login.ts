@@ -3,7 +3,7 @@ import { Context } from "hono";
 import Router from ".";
 
 class Login extends Router {
-  async student_login(c: Context) {
+  async students_login(c: Context) {
     try {
       const session = c.get("session");
       if (!session.get("loggedIn") || session.get("role") !== Role.Student) {
@@ -18,10 +18,10 @@ class Login extends Router {
     }
   }
 
-  async admin_login(c: Context) {
+  async teachers_login(c: Context) {
     try {
       const session = c.get("session");
-      if (!session.get("loggedIn") || session.get("role") !== Role.Admin) {
+      if (!session.get("loggedIn") || session.get("role") !== Role.Teacher) {
         return c.redirect("/login-admin");
       }
 
@@ -33,10 +33,10 @@ class Login extends Router {
     }
   }
 
-  async root_login(c: Context) {
+  async admin_login(c: Context) {
     try {
       const session = c.get("session");
-      if (!session.get("loggedIn") || session.get("role") !== Role.Root) {
+      if (!session.get("loggedIn") || session.get("role") !== Role.Admin) {
         return c.redirect("/login-root");
       }
 
@@ -48,7 +48,7 @@ class Login extends Router {
     }
   }
 
-  async student_api(c: Context) {
+  async students_api(c: Context) {
     try {
       const body = await c.req.json();
       const { id, password } = body;
@@ -60,7 +60,7 @@ class Login extends Router {
         );
       }
 
-      const user = await this.db.getUserById(`${id}`);
+      const user = await this.db.getStudentById(`${id}`);
 
       if (user && password === user.password) {
         const session = c.get("session");
@@ -68,6 +68,37 @@ class Login extends Router {
         session.set("loggedIn", true);
         session.set("role", Role.Student);
         return c.redirect("/student");
+      }
+      return c.json(
+        { success: false, message: "Invalid username or password" },
+        401,
+      );
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async teachers_api(c: Context) {
+    try {
+      const body = await c.req.json();
+      const { id, password } = body;
+
+      if (!id || !password) {
+        return c.json(
+          { success: false, message: "Username and password are required" },
+          400,
+        );
+      }
+
+      const user = await this.db.getTeacherById(`${id}`);
+
+      if (user && password === user.password) {
+        const session = c.get("session");
+        session.set("id", id);
+        session.set("loggedIn", true);
+        session.set("role", Role.Teacher);
+        return c.redirect("/teacher");
       }
       return c.json(
         { success: false, message: "Invalid username or password" },
@@ -91,7 +122,7 @@ class Login extends Router {
         );
       }
 
-      const user = await this.db.getUserById(`${id}`);
+      const user = await this.db.getAdminById(`${id}`);
 
       if (user && password === user.password) {
         const session = c.get("session");
@@ -99,37 +130,6 @@ class Login extends Router {
         session.set("loggedIn", true);
         session.set("role", Role.Admin);
         return c.redirect("/admin");
-      }
-      return c.json(
-        { success: false, message: "Invalid username or password" },
-        401,
-      );
-    } catch (error) {
-      console.error(error);
-      return c.json({ error: "Internal Server Error" }, 500);
-    }
-  }
-
-  async root_api(c: Context) {
-    try {
-      const body = await c.req.json();
-      const { id, password } = body;
-
-      if (!id || !password) {
-        return c.json(
-          { success: false, message: "Username and password are required" },
-          400,
-        );
-      }
-
-      const user = await this.db.getUserById(`${id}`);
-
-      if (user && password === user.password) {
-        const session = c.get("session");
-        session.set("id", id);
-        session.set("loggedIn", true);
-        session.set("role", Role.Root);
-        return c.redirect("/root");
       }
       return c.json(
         { success: false, message: "Invalid username or password" },
