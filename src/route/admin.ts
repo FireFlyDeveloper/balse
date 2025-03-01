@@ -62,7 +62,7 @@ class Admin extends Router {
           .toLowerCase(),
       );
 
-      const password = `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`;
+      const password = await this.hashPassword(`${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`);
 
       const data = {
         first_name,
@@ -121,7 +121,7 @@ class Admin extends Router {
       const { first_name, middle_name, last_name, date_of_birth, lrn } =
         await c.req.json();
 
-      const password = `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`;
+      const password = await this.hashPassword(`${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`);
 
       const enrollment_date = new Date().toISOString();
 
