@@ -229,7 +229,10 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { id, name, departmentId } = await c.req.json();
+      const { name, departmentId } = await c.req.json();
+
+      const id = this.textToNumbers(name.replace(/\s/g, "").toLowerCase());
+
       const class_ = await this.db.addClass(id, name, departmentId);
 
       return c.json({ loggedIn: true, data: class_ });

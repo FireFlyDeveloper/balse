@@ -15,22 +15,31 @@
           opacity: 0;
           transform: translateY(20px);
         }
+
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
+
       .fade-in {
         animation: fadeIn 0.8s ease-out;
       }
+
       .theme-blue {
         color: #1d4ed8;
       }
+
       .theme-yellow {
         color: #f59e0b;
       }
+
+      .hidden-section {
+        display: none;
+      }
     </style>
   </head>
+
   <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
     <!-- Header -->
     <div class="w-full bg-blue-800 shadow-lg">
@@ -65,6 +74,7 @@
           <li>
             <a
               href="#departments"
+              onclick="showSection('departments')"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
               <i class="bi bi-building mr-2"></i> Departments
@@ -73,6 +83,7 @@
           <li>
             <a
               href="#sections"
+              onclick="showSection('sections')"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
               <i class="bi bi-grid mr-2"></i> Sections
@@ -81,6 +92,7 @@
           <li>
             <a
               href="#teachers"
+              onclick="showSection('teachers')"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
               <i class="bi bi-person-standing mr-2"></i> Teachers
@@ -89,6 +101,7 @@
           <li>
             <a
               href="#strands"
+              onclick="showSection('strands')"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
               <i class="bi bi-layers mr-2"></i> Strands
@@ -100,19 +113,17 @@
 
     <!-- Main Content -->
     <div class="dashboard-container max-w-6xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+      <!-- Departments Section -->
+      <div id="departments" class="bg-white rounded-xl shadow-lg p-6 fade-in">
         <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
           <i class="bi bi-building mr-2 theme-blue mr-2"></i> Departments
         </h2>
-
-        <!-- Create Departments Button -->
         <button
-          onclick="openModal()"
+          onclick="openDepartmentModal()"
           class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition mb-4"
         >
           <i class="bi bi-plus-lg mr-2"></i> Create Department
         </button>
-
         <div class="overflow-x-auto">
           <table class="w-full bg-white rounded-lg shadow-sm">
             <thead class="bg-blue-800 text-white">
@@ -125,6 +136,57 @@
             </tbody>
           </table>
         </div>
+      </div>
+
+      <!-- Sections Section -->
+      <div
+        id="sections"
+        class="bg-white rounded-xl shadow-lg p-6 fade-in hidden-section"
+      >
+        <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
+          <i class="bi bi-grid mr-2 theme-blue mr-2"></i> Sections
+        </h2>
+        <button
+          onclick="openSectionModal()"
+          class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition mb-4"
+        >
+          <i class="bi bi-plus-lg mr-2"></i> Create Section
+        </button>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-white rounded-lg shadow-sm">
+            <thead class="bg-blue-800 text-white">
+              <tr>
+                <th class="p-4 text-left">Section Name</th>
+                <th class="p-4 text-left">Department</th>
+              </tr>
+            </thead>
+            <tbody id="sectionTableBody" class="divide-y divide-blue-100">
+              <!-- Sections will be inserted dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Teachers Section -->
+      <div
+        id="teachers"
+        class="bg-white rounded-xl shadow-lg p-6 fade-in hidden-section"
+      >
+        <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
+          <i class="bi bi-person-standing mr-2 theme-blue mr-2"></i> Teachers
+        </h2>
+        <p>Teachers content goes here.</p>
+      </div>
+
+      <!-- Strands Section -->
+      <div
+        id="strands"
+        class="bg-white rounded-xl shadow-lg p-6 fade-in hidden-section"
+      >
+        <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
+          <i class="bi bi-layers mr-2 theme-blue mr-2"></i> Strands
+        </h2>
+        <p>Strands content goes here.</p>
       </div>
     </div>
 
@@ -150,7 +212,57 @@
           <div class="flex justify-end space-x-4">
             <button
               type="button"
-              onclick="closeModal()"
+              onclick="closeDepartmentModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Create Section Modal -->
+    <div
+      id="createSectionModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">Create Section</h2>
+        <form id="createSectionForm">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Section Name</label
+            >
+            <input
+              type="text"
+              name="section_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Department</label
+            >
+            <select
+              name="department_id"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <!-- Departments will be populated dynamically -->
+            </select>
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button
+              type="button"
+              onclick="closeSectionModal()"
               class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
             >
               Cancel
@@ -167,6 +279,26 @@
     </div>
 
     <script>
+      let departments_ = [];
+
+      // Function to show/hide sections based on navigation clicks
+      function showSection(sectionId) {
+        // Hide all sections
+        document
+          .querySelectorAll(".dashboard-container > div")
+          .forEach((div) => {
+            div.classList.add("hidden-section");
+          });
+
+        // Show the selected section
+        document.getElementById(sectionId).classList.remove("hidden-section");
+      }
+
+      // Default to showing the Departments section
+      showSection("departments");
+
+      // Fetch and display departments
+      // Fetch and display departments
       fetch("/departments", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -177,6 +309,8 @@
             window.location.href = "/login-admin";
           } else {
             const departments = data.data;
+
+            // Populate the departments table
             const departmentTableBody = document.getElementById(
               "departmentTableBody",
             );
@@ -187,9 +321,23 @@
               row.className = "hover:bg-blue-50 cursor-pointer transition-all";
               row.onclick = () => redirectToDepartmentDetail(department.id);
               row.innerHTML = `
-              <td class="p-4">${department.department_name}</td>
-            `;
+          <td class="p-4">${department.department_name}</td>
+        `;
               departmentTableBody.appendChild(row);
+              departments_.push(department);
+            });
+
+            // Populate the department dropdown in the Create Section modal
+            const departmentDropdown = document.querySelector(
+              "#createSectionForm select[name='department_id']",
+            );
+            departmentDropdown.innerHTML = ""; // Clear existing options
+
+            departments.forEach((department) => {
+              const option = document.createElement("option");
+              option.value = department.id; // Use department ID as the value
+              option.textContent = department.department_name; // Use department name as the display text
+              departmentDropdown.appendChild(option);
             });
           }
         })
@@ -197,10 +345,34 @@
           console.error("Error loading department data:", error),
         );
 
-      function redirectToDepartmentDetail(id) {
-        window.location.href = `/info/department/${id}`;
-      }
+      // Fetch and display sections
+      fetch("/classes", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const sections = data.data;
+          const sectionTableBody = document.getElementById("sectionTableBody");
+          sectionTableBody.innerHTML = "";
 
+          sections.forEach((section) => {
+            const department = departments_.find(
+              (item) => item.id === section.department_id.id,
+            );
+
+            const row = document.createElement("tr");
+            row.className = "hover:bg-blue-50 cursor-pointer transition-all";
+            row.innerHTML = `
+              <td class="p-4">${section.class_name}</td>
+              <td class="p-4">${department.department_name}</td>
+            `;
+            sectionTableBody.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error loading section data:", error));
+
+      // Logout function
       async function logout() {
         try {
           const response = await fetch("/logout", {
@@ -218,21 +390,31 @@
         }
       }
 
-      // Function to open the modal
-      function openModal() {
+      // Department modal functions
+      function openDepartmentModal() {
         document
           .getElementById("createDepartmentModal")
           .classList.remove("hidden");
       }
 
-      // Function to close the modal
-      function closeModal() {
+      function closeDepartmentModal() {
         document
           .getElementById("createDepartmentModal")
           .classList.add("hidden");
       }
 
-      // Handle form submission
+      // Section modal functions
+      function openSectionModal() {
+        document
+          .getElementById("createSectionModal")
+          .classList.remove("hidden");
+      }
+
+      function closeSectionModal() {
+        document.getElementById("createSectionModal").classList.add("hidden");
+      }
+
+      // Handle department form submission
       document
         .getElementById("createDepartmentForm")
         .addEventListener("submit", async function (event) {
@@ -252,14 +434,48 @@
 
             if (response.ok) {
               alert("Department created successfully!");
-              closeModal();
-              window.location.reload(); // Reload the page to reflect the new department
+              closeDepartmentModal();
+              window.location.reload();
             } else {
               alert("Failed to create department.");
             }
           } catch (error) {
             console.error("Error creating department:", error);
             alert("An error occurred while creating the department.");
+          }
+        });
+
+      // Handle section form submission
+      document
+        .getElementById("createSectionForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(event.target);
+          const data = {
+            name: formData.get("section_name"),
+            departmentId: formData.get("department_id"),
+          };
+
+          console.log(data);
+
+          try {
+            const response = await fetch("/classes", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+              alert("Section created successfully!");
+              closeSectionModal();
+              window.location.reload();
+            } else {
+              alert("Failed to create section.");
+            }
+          } catch (error) {
+            console.error("Error creating section:", error);
+            alert("An error occurred while creating the section.");
           }
         });
     </script>
