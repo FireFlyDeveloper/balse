@@ -11,7 +11,7 @@ export default abstract class Router {
   private saltRounds: number = 10;
 
   public capitalizeWords(text: string): string {
-    return text.replace(/\b\w/g, (char) => char.toUpperCase());
+    return text.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   public isAdmin(session: any): boolean {

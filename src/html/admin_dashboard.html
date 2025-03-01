@@ -15,31 +15,25 @@
           opacity: 0;
           transform: translateY(20px);
         }
-
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
-
       .fade-in {
         animation: fadeIn 0.8s ease-out;
       }
-
       .theme-blue {
         color: #1d4ed8;
       }
-
       .theme-yellow {
         color: #f59e0b;
       }
-
       .hidden-section {
         display: none;
       }
     </style>
   </head>
-
   <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
     <!-- Header -->
     <div class="w-full bg-blue-800 shadow-lg">
@@ -175,7 +169,27 @@
         <h2 class="text-2xl font-bold text-blue-800 mb-6 flex items-center">
           <i class="bi bi-person-standing mr-2 theme-blue mr-2"></i> Teachers
         </h2>
-        <p>Teachers content goes here.</p>
+        <button
+          onclick="openTeacherModal()"
+          class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition mb-4"
+        >
+          <i class="bi bi-plus-lg mr-2"></i> Create Teacher
+        </button>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-white rounded-lg shadow-sm">
+            <thead class="bg-blue-800 text-white">
+              <tr>
+                <th class="p-4 text-left">First Name</th>
+                <th class="p-4 text-left">Middle Name</th>
+                <th class="p-4 text-left">Last Name</th>
+                <th class="p-4 text-left">Department</th>
+              </tr>
+            </thead>
+            <tbody id="teacherTableBody" class="divide-y divide-blue-100">
+              <!-- Teachers will be inserted dynamically -->
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Strands Section -->
@@ -278,206 +292,338 @@
       </div>
     </div>
 
-    <script>
-      let departments_ = [];
+    <!-- Create Teacher Modal -->
+    <div
+      id="createTeacherModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">Create Teacher</h2>
+        <form id="createTeacherForm">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >First Name</label
+            >
+            <input
+              type="text"
+              name="first_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Middle Name</label
+            >
+            <input
+              type="text"
+              name="middle_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Last Name</label
+            >
+            <input
+              type="text"
+              name="last_name"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Department</label
+            >
+            <select
+              name="department_id"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <!-- Departments will be populated dynamically -->
+            </select>
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button
+              type="button"
+              onclick="closeTeacherModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-      // Function to show/hide sections based on navigation clicks
+    <script>
+      let departments = []; // Store departments for dropdowns
+
+      // Section visibility control
       function showSection(sectionId) {
-        // Hide all sections
         document
           .querySelectorAll(".dashboard-container > div")
           .forEach((div) => {
-            div.classList.add("hidden-section");
+            div.classList.toggle("hidden-section", div.id !== sectionId);
           });
-
-        // Show the selected section
-        document.getElementById(sectionId).classList.remove("hidden-section");
       }
 
-      // Default to showing the Departments section
+      // Initialize default view
       showSection("departments");
 
-      // Fetch and display departments
-      // Fetch and display departments
-      fetch("/departments", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.loggedIn) {
-            window.location.href = "/login-admin";
-          } else {
-            const departments = data.data;
-
-            // Populate the departments table
-            const departmentTableBody = document.getElementById(
-              "departmentTableBody",
-            );
-            departmentTableBody.innerHTML = "";
-
-            departments.forEach((department) => {
-              const row = document.createElement("tr");
-              row.className = "hover:bg-blue-50 cursor-pointer transition-all";
-              row.onclick = () => redirectToDepartmentDetail(department.id);
-              row.innerHTML = `
-          <td class="p-4">${department.department_name}</td>
-        `;
-              departmentTableBody.appendChild(row);
-              departments_.push(department);
-            });
-
-            // Populate the department dropdown in the Create Section modal
-            const departmentDropdown = document.querySelector(
-              "#createSectionForm select[name='department_id']",
-            );
-            departmentDropdown.innerHTML = ""; // Clear existing options
-
-            departments.forEach((department) => {
-              const option = document.createElement("option");
-              option.value = department.id; // Use department ID as the value
-              option.textContent = department.department_name; // Use department name as the display text
-              departmentDropdown.appendChild(option);
-            });
-          }
-        })
-        .catch((error) =>
-          console.error("Error loading department data:", error),
-        );
-
-      // Fetch and display sections
-      fetch("/classes", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const sections = data.data;
-          const sectionTableBody = document.getElementById("sectionTableBody");
-          sectionTableBody.innerHTML = "";
-
-          sections.forEach((section) => {
-            const department = departments_.find(
-              (item) => item.id === section.department_id.id,
-            );
-
-            const row = document.createElement("tr");
-            row.className = "hover:bg-blue-50 cursor-pointer transition-all";
-            row.innerHTML = `
-              <td class="p-4">${section.class_name}</td>
-              <td class="p-4">${department.department_name}</td>
-            `;
-            sectionTableBody.appendChild(row);
-          });
-        })
-        .catch((error) => console.error("Error loading section data:", error));
-
-      // Logout function
-      async function logout() {
+      // Fetch utilities
+      async function fetchData(url, options) {
         try {
-          const response = await fetch("/logout", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          });
-
-          if (response.ok) {
-            window.location.href = "/login-root";
-          } else {
-            console.error("Logout failed:", response.statusText);
-          }
+          const response = await fetch(url, options);
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          return await response.json();
         } catch (error) {
-          console.error("Error during logout:", error);
+          console.error("Fetch error:", error);
+          throw error;
         }
       }
 
-      // Department modal functions
-      function openDepartmentModal() {
-        document
-          .getElementById("createDepartmentModal")
-          .classList.remove("hidden");
+      // Department management
+      async function loadDepartments() {
+        try {
+          const data = await fetchData("/departments", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+
+          if (!data.loggedIn) {
+            window.location.href = "/login-admin";
+            return;
+          }
+
+          // Update departments array
+          departments = data.data;
+
+          // Populate departments table
+          const tableBody = document.getElementById("departmentTableBody");
+          tableBody.innerHTML = departments
+            .map(
+              (department) => `
+              <tr class="hover:bg-blue-50 cursor-pointer transition-all" 
+                  onclick="redirectToDepartmentDetail(${department.id})">
+                <td class="p-4">${department.department_name}</td>
+              </tr>
+            `,
+            )
+            .join("");
+
+          // Populate department dropdowns
+          document
+            .querySelectorAll('select[name="department_id"]')
+            .forEach((select) => {
+              select.innerHTML = departments
+                .map(
+                  (d) =>
+                    `<option value="${d.id}">${d.department_name}</option>`,
+                )
+                .join("");
+            });
+        } catch (error) {
+          console.error("Department loading failed:", error);
+          alert("Failed to load departments. Please try again.");
+        }
       }
 
-      function closeDepartmentModal() {
-        document
-          .getElementById("createDepartmentModal")
-          .classList.add("hidden");
+      // Section management
+      async function loadSections() {
+        try {
+          const data = await fetchData("/classes", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const tableBody = document.getElementById("sectionTableBody");
+          tableBody.innerHTML = data.data
+            .map((section) => {
+              const department = departments.find(
+                (d) => d.id === section.department_id.id,
+              );
+              return `
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                  <td class="p-4">${section.class_name}</td>
+                  <td class="p-4">${department?.department_name || "Unknown"}</td>
+                </tr>
+              `;
+            })
+            .join("");
+        } catch (error) {
+          console.error("Section loading failed:", error);
+          alert("Failed to load sections. Please try again.");
+        }
       }
 
-      // Section modal functions
-      function openSectionModal() {
-        document
-          .getElementById("createSectionModal")
-          .classList.remove("hidden");
+      // Teacher management
+      async function loadTeachers() {
+        try {
+          const data = await fetchData("/teachers", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const tableBody = document.getElementById("teacherTableBody");
+          tableBody.innerHTML = data.data
+            .map((teacher) => {
+              const department = departments.find(
+                (d) => d.id === teacher.department_id,
+              );
+              return `
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                  <td class="p-4">${teacher.first_name}</td>
+                  <td class="p-4">${teacher.middle_name || ""}</td>
+                  <td class="p-4">${teacher.last_name}</td>
+                  <td class="p-4">${department?.department_name || "Unknown"}</td>
+                </tr>
+              `;
+            })
+            .join("");
+        } catch (error) {
+          console.error("Teacher loading failed:", error);
+          alert("Failed to load teachers. Please try again.");
+        }
       }
 
-      function closeSectionModal() {
-        document.getElementById("createSectionModal").classList.add("hidden");
+      // Form handlers
+      async function handleDepartmentForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        try {
+          await fetchData("/departments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: formData.get("department_name") }),
+          });
+
+          alert("Department created successfully!");
+          closeDepartmentModal();
+          await loadDepartments(); // Refresh data instead of reloading page
+        } catch (error) {
+          alert(error.message || "Failed to create department");
+        }
       }
 
-      // Handle department form submission
+      async function handleSectionForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        try {
+          await fetchData("/classes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: formData.get("section_name"),
+              departmentId: formData.get("department_id"),
+            }),
+          });
+
+          alert("Section created successfully!");
+          closeSectionModal();
+          await loadSections(); // Refresh sections list
+        } catch (error) {
+          alert(error.message || "Failed to create section");
+        }
+      }
+
+      async function handleTeacherForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        try {
+          await fetchData("/teachers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              first_name: formData.get("first_name"),
+              middle_name: formData.get("middle_name"),
+              last_name: formData.get("last_name"),
+              departmentId: formData.get("department_id"),
+            }),
+          });
+
+          alert("Teacher created successfully!");
+          closeTeacherModal();
+          await loadTeachers(); // Refresh teachers list
+        } catch (error) {
+          alert(error.message || "Failed to create teacher");
+        }
+      }
+
+      // Modal controls
+      const modalControls = {
+        department: {
+          open: () =>
+            document
+              .getElementById("createDepartmentModal")
+              .classList.remove("hidden"),
+          close: () =>
+            document
+              .getElementById("createDepartmentModal")
+              .classList.add("hidden"),
+        },
+        section: {
+          open: () =>
+            document
+              .getElementById("createSectionModal")
+              .classList.remove("hidden"),
+          close: () =>
+            document
+              .getElementById("createSectionModal")
+              .classList.add("hidden"),
+        },
+        teacher: {
+          open: () =>
+            document
+              .getElementById("createTeacherModal")
+              .classList.remove("hidden"),
+          close: () =>
+            document
+              .getElementById("createTeacherModal")
+              .classList.add("hidden"),
+        },
+      };
+
+      // Initial data load
+      (async () => {
+        await loadDepartments();
+        await loadSections();
+        await loadTeachers();
+      })();
+
+      // Logout handler
+      async function logout() {
+        try {
+          const response = await fetch("/logout", { method: "POST" });
+          if (!response.ok) throw new Error("Logout failed");
+          window.location.href = "/login-root";
+        } catch (error) {
+          console.error("Logout error:", error);
+          alert("Logout failed. Please try again.");
+        }
+      }
+
+      // Event listeners
       document
         .getElementById("createDepartmentForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          const formData = new FormData(event.target);
-          const data = {
-            name: formData.get("department_name"),
-          };
-
-          try {
-            const response = await fetch("/departments", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-              alert("Department created successfully!");
-              closeDepartmentModal();
-              window.location.reload();
-            } else {
-              alert("Failed to create department.");
-            }
-          } catch (error) {
-            console.error("Error creating department:", error);
-            alert("An error occurred while creating the department.");
-          }
-        });
-
-      // Handle section form submission
+        .addEventListener("submit", handleDepartmentForm);
       document
         .getElementById("createSectionForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
-
-          const formData = new FormData(event.target);
-          const data = {
-            name: formData.get("section_name"),
-            departmentId: formData.get("department_id"),
-          };
-
-          console.log(data);
-
-          try {
-            const response = await fetch("/classes", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-              alert("Section created successfully!");
-              closeSectionModal();
-              window.location.reload();
-            } else {
-              alert("Failed to create section.");
-            }
-          } catch (error) {
-            console.error("Error creating section:", error);
-            alert("An error occurred while creating the section.");
-          }
-        });
+        .addEventListener("submit", handleSectionForm);
+      document
+        .getElementById("createTeacherForm")
+        .addEventListener("submit", handleTeacherForm);
     </script>
   </body>
 </html>
