@@ -35,7 +35,7 @@ class Admin extends Router {
         last_name: teacher.last_name,
         middle_name: teacher.middle_name,
         email: teacher.email,
-        department: teacher.department_id,
+        department_id: teacher.department_id,
       }));
 
       return c.json({ loggedIn: true, data: teachers });
@@ -69,7 +69,7 @@ class Admin extends Router {
         middle_name,
         last_name,
         department_id: departmentId,
-        password,
+        password_hash: password,
       };
 
       const teacher = await this.db.createTeacher(id, data);
