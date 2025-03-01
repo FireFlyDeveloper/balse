@@ -49,6 +49,12 @@ export default class Database {
     return await this.client.db.Teachers.delete(teacherId);
   }
 
+  async getTeachersDepartment(department_id: string) {
+    return await this.client.db.Teachers.filter({
+      department_id: department_id,
+    }).getAll();
+  }
+
   /** COURSES **/
   async addCourse(id: string, name: string, departmentId: string) {
     return await this.client.db.Courses.create(id, {

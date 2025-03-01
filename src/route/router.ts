@@ -33,6 +33,8 @@ router.post("courses", (c) => admin.createCourse(c));
 // Department Routes
 router.get("departments", (c) => admin.getAllDepartments(c));
 router.post("departments", (c) => admin.createDepartment(c));
+router.get("departments/info/:id", (c) => admin.department(c));
+router.post("departments/info", (c) => admin.getTeachersDepartment(c));
 
 // Class Routes
 router.get("classes", (c) => admin.getAllClasses(c));

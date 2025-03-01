@@ -2,6 +2,7 @@ import { Context } from "hono";
 import Router from ".";
 
 class Admin extends Router {
+  // Page
   async admin(c: Context) {
     try {
       const session = c.get("session");
@@ -11,6 +12,22 @@ class Admin extends Router {
       }
 
       const html = await this.rf(`${this.dir}/admin_dashboard.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async department(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.redirect("/login-admin");
+      }
+
+      const html = await this.rf(`${this.dir}/admin_department.html`, "utf-8");
       return c.html(html);
     } catch (error) {
       console.error(error);
@@ -62,7 +79,9 @@ class Admin extends Router {
           .toLowerCase(),
       );
 
-      const password = await this.hashPassword(`${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`);
+      const password = await this.hashPassword(
+        `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`,
+      );
 
       const data = {
         first_name,
@@ -75,6 +94,36 @@ class Admin extends Router {
       const teacher = await this.db.createTeacher(id, data);
 
       return c.json({ loggedIn: true, data: teacher });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getTeachersDepartment(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const department = await this.db.getDepartmentById(id);
+      const teachersDepartment = await this.db.getTeachersDepartment(id);
+
+      const teachers = teachersDepartment.map((teacher: any) => ({
+        id: teacher.id,
+        first_name: teacher.first_name,
+        last_name: teacher.last_name,
+        middle_name: teacher.middle_name,
+        email: teacher.email,
+      }));
+
+      const data = { department_name: department.department_name, teachers };
+
+      return c.json({ loggedIn: true, data: data });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
@@ -121,7 +170,9 @@ class Admin extends Router {
       const { first_name, middle_name, last_name, date_of_birth, lrn } =
         await c.req.json();
 
-      const password = await this.hashPassword(`${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`);
+      const password = await this.hashPassword(
+        `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`,
+      );
 
       const enrollment_date = new Date().toISOString();
 
