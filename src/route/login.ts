@@ -8,7 +8,7 @@ class Login extends Router {
       const session = c.get("session");
 
       if (!this.isStudent(session)) {
-        return c.redirect("/login");
+        return c.redirect("/student");
       }
 
       const html = await this.rf(`${this.dir}/student_login.html`, "utf-8");
@@ -24,7 +24,7 @@ class Login extends Router {
       const session = c.get("session");
 
       if (!this.isTeacher(session)) {
-        return c.redirect("/login-teacher");
+        return c.redirect("/teacher");
       }
 
       const html = await this.rf(`${this.dir}/teachers_login.html`, "utf-8");
@@ -40,7 +40,7 @@ class Login extends Router {
       const session = c.get("session");
 
       if (!this.isAdmin(session)) {
-        return c.redirect("/login-admin");
+        return c.redirect("/admin");
       }
 
       const html = await this.rf(`${this.dir}/admin_login.html`, "utf-8");
