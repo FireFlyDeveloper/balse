@@ -1,11 +1,11 @@
 export type SessionDataTypes = {
   id: string;
   loggedIn: boolean;
-  role: "student" | "admin" | "root" | null;
+  role: "student" | "teacher" | "admin" | null;
 };
 
 export const Role = {
   Student: "student",
+  Teacher: "teacher",
   Admin: "admin",
-  Root: "root",
 };
