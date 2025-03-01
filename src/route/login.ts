@@ -24,10 +24,10 @@ class Login extends Router {
       const session = c.get("session");
 
       if (!this.isTeacher(session)) {
-        return c.redirect("/login-admin");
+        return c.redirect("/login-teacher");
       }
 
-      const html = await this.rf(`${this.dir}/admin_login.html`, "utf-8");
+      const html = await this.rf(`${this.dir}/teachers_login.html`, "utf-8");
       return c.html(html);
     } catch (error) {
       console.error(error);
@@ -40,10 +40,10 @@ class Login extends Router {
       const session = c.get("session");
 
       if (!this.isAdmin(session)) {
-        return c.redirect("/login-root");
+        return c.redirect("/login-admin");
       }
 
-      const html = await this.rf(`${this.dir}/root_login.html`, "utf-8");
+      const html = await this.rf(`${this.dir}/admin_login.html`, "utf-8");
       return c.html(html);
     } catch (error) {
       console.error(error);

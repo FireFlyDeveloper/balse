@@ -8,11 +8,11 @@ const router = new Hono();
 router.get("login", (c) => login.students_login(c));
 router.post("login", (c) => login.students_api(c));
 
-// Admin Login
+// Teacher Login
 router.get("login-teacher", (c) => login.teachers_login(c));
 router.post("login-teacher", (c) => login.teachers_api(c));
 
-// Root Login
+// Admin Login
 router.get("login-admin", (c) => login.admin_login(c));
 router.post("login-admin", (c) => login.admin_api(c));
 

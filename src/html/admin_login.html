@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts: Poppins -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="flex flex-col justify-center items-center bg-white from-purple-100 to-indigo-100"
+  >
+    <!-- Header Background Image -->
+    <div
+      class="w-full h-40 bg-cover bg-center transition-all duration-500 hover:bg-opacity-90"
+      style="
+        background-image: url(&quot;https://scontent.fmnl17-1.fna.fbcdn.net/v/t39.30808-6/447291792_975597337696759_6920370367503221022_n.png?_nc_cat=101&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeFXJTeBiHCMD0Zu1sIKZsJCBMSsgH62j28ExKyAfraPb3ivxQ2bF6p8LuYrMFp3cxF6hSshvfJhe3OBniSCpk0V&_nc_ohc=8kkcZHyzFWEQ7kNvgGLuFxV&_nc_oc=AdgJbUvQeEAx5E5e45DWUDq4ozrcs24dRRXGzU8EqWGXViKaIBXbctEdQIh2s0M5BiQ&_nc_zt=23&_nc_ht=scontent.fmnl17-1.fna&_nc_gid=AQ96dzCVKiwBhXIOJeZ3lBj&oh=00_AYAgiM7chyL_HRX88hd0OBLR0qByByiSbJZBLqd0YdR7mA&oe=67C2E089&quot;);
+      "
+    >
+      <div
+        class="flex justify-center items-center h-full bg-black bg-opacity-50"
+      >
+        <h1
+          class="mt-12 text-3xl font-bold text-white text-center font-poppins"
+        >
+          BALAYAN SENIOR HIGH SCHOOL
+        </h1>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="absolute top-3 left-4 sm:top-7 sm:left-4 animate-logo">
+      <img
+        src="https://scontent.fmnl17-6.fna.fbcdn.net/v/t39.30808-6/305880873_570766908179806_8024302102247566287_n.png?stp=dst-png_p370x247&_nc_cat=109&ccb=1-7&_nc_sid=d0a8c7&_nc_eui2=AeGGRC4PTloPuwQ7D7DrCNYQve54PEHBaDi97ng8QcFoOJZT7eOL2VnniBXZvtFjiDT_00_orwthuj1-ycLk_VOR&_nc_ohc=y9gAHZh02_UQ7kNvgEAHdI4&_nc_oc=Adgw8Y2kv3xvzHsmOoQ_aSIDB9qoLq6dj80f8winl2NCioZhhyVmUtx5BBd6YMSbRFA&_nc_zt=23&_nc_ht=scontent.fmnl17-6.fna&edm=AN6CN6oEAAAA&_nc_gid=AU9leXKuh4muTqAXXfCOiRB&oh=00_AYAolN-mIdrmRBmwewJXzJLBicaTJrXOQKnuBHs32T9voQ&oe=67C2DCE7"
+        alt="Logo"
+        class="rounded-full w-12 h-12 sm:w-24 sm:h-24 shadow-md object-cover"
+      />
+    </div>
+
+    <!-- Login Form -->
+    <div class="p-8 w-full max-w-md text-center animate-fade-in">
+      <!-- Login Icon -->
+      <div class="flex justify-center mb-6">
+        <i class="bi bi-shield-lock text-6xl text-indigo-500"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Admin Portal</h2>
+      <form id="login-form" class="space-y-4">
+        <!-- LRN Input -->
+        <div class="relative">
+          <i
+            class="bi bi-person absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all transform hover:scale-105 focus:scale-105"
+            required
+          />
+        </div>
+        <!-- Password Input -->
+        <div class="relative">
+          <i
+            class="bi bi-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all transform hover:scale-105 focus:scale-105"
+            required
+          />
+        </div>
+        <!-- Login Button -->
+        <button
+          type="button"
+          onclick="login()"
+          class="w-full bg-indigo-500 text-white py-3 rounded-lg font-semibold hover:bg-indigo-600 transition-all transform hover:scale-105 flex items-center justify-center"
+        >
+          <i class="bi bi-box-arrow-in-right mr-2"></i> Login
+        </button>
+        <!-- Error Message -->
+        <p
+          id="error-message"
+          class="text-red-500 text-sm mt-2 hidden animate-shake"
+        >
+          Username or password is incorrect.
+        </p>
+      </form>
+
+      <!-- Forgot Password and Contact Us Links -->
+      <div class="mt-6 space-y-3">
+        <!-- Forgot Password -->
+        <a
+          href="#"
+          class="text-indigo-500 hover:text-indigo-600 transition-all flex items-center justify-center"
+        >
+          <i class="bi bi-question-circle mr-2"></i> Forgot Password?
+        </a>
+        <!-- Contact Us -->
+        <a
+          href="https://www.facebook.com/DepEdTayoBSHS342209"
+          class="text-indigo-500 hover:text-indigo-600 transition-all flex items-center justify-center"
+        >
+          <i class="bi bi-headset mr-2"></i> Contact Us
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Handle Enter key press
+      document
+        .getElementById("login-form")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            login();
+          }
+        });
+
+      // Login function
+      function login() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const errorMessage = document.getElementById("error-message");
+
+        if (!username || !password) {
+          errorMessage.textContent = "Both fields are required.";
+          errorMessage.classList.remove("hidden");
+          return;
+        }
+
+        fetch("/login-admin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: username, password: password }),
+        })
+          .then((response) => {
+            if (response.status === 401) {
+              errorMessage.textContent = "Username or password is incorrect.";
+              errorMessage.classList.remove("hidden");
+            } else if (response.ok) {
+              window.location.href = "/root";
+            }
+          })
+          .catch(() => {
+            errorMessage.textContent = "An error occurred. Please try again.";
+            errorMessage.classList.remove("hidden");
+          });
+      }
+    </script>
+
+    <!-- Custom Animations -->
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        75% {
+          transform: translateX(-10px);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .animate-shake {
+        animation: shake 0.5s ease-in-out;
+      }
+
+      .animate-logo {
+        animation: rotateLogo 2s ease-in-out;
+      }
+
+      /* Apply Poppins font to the header */
+      .font-poppins {
+        font-family: "Poppins", sans-serif;
+      }
+    </style>
+  </body>
+</html>
