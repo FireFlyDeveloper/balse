@@ -167,8 +167,14 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { first_name, middle_name, last_name, date_of_birth, lrn } =
-        await c.req.json();
+      const {
+        first_name,
+        middle_name,
+        last_name,
+        date_of_birth,
+        lrn,
+        class_id,
+      } = await c.req.json();
 
       const password = await this.hashPassword(
         `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`,
@@ -183,6 +189,7 @@ class Admin extends Router {
         date_of_birth,
         password_hash: password,
         enrollment_date,
+        class_id,
       };
 
       const student = await this.db.createStudent(lrn, data);

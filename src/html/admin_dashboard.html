@@ -214,6 +214,7 @@
                 <th class="p-4 text-left">First Name</th>
                 <th class="p-4 text-left">Middle Name</th>
                 <th class="p-4 text-left">Last Name</th>
+                <th class="p-4 text-left">Section</th>
               </tr>
             </thead>
             <tbody id="studentTableBody" class="divide-y divide-blue-100">
@@ -438,6 +439,18 @@
               required
             />
           </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Sections</label
+            >
+            <select
+              name="classes_id"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <!-- Classes will be populated dynamically -->
+            </select>
+          </div>
           <div class="flex justify-end space-x-4">
             <button
               type="button"
@@ -458,6 +471,7 @@
     </div>
     <script>
       let departments = []; // Store departments for dropdowns
+      let sections = [];
 
       // Section visibility control
       function showSection(sectionId) {
@@ -538,6 +552,8 @@
             headers: { "Content-Type": "application/json" },
           });
 
+          sections = data.data;
+
           const tableBody = document.getElementById("sectionTableBody");
           tableBody.innerHTML = data.data
             .map((section) => {
@@ -552,6 +568,15 @@
                   `;
             })
             .join("");
+
+          // Populate department dropdowns
+          document
+            .querySelectorAll('select[name="classes_id"]')
+            .forEach((select) => {
+              select.innerHTML = data.data
+                .map((d) => `<option value="${d.id}">${d.class_name}</option>`)
+                .join("");
+            });
         } catch (error) {
           console.error("Section loading failed:", error);
           alert("Failed to load sections. Please try again.");
@@ -599,12 +624,16 @@
           const tableBody = document.getElementById("studentTableBody");
           tableBody.innerHTML = data.data
             .map((student) => {
+              const section = sections.find(
+                (d) => d.id === student.class_id.id,
+              );
               return `
                     <tr class="hover:bg-blue-50 cursor-pointer transition-all">
                       <td class="p-4">${student.id}</td>
                       <td class="p-4">${student.first_name}</td>
                       <td class="p-4">${student.middle_name || ""}</td>
                       <td class="p-4">${student.last_name}</td>
+                      <td class="p-4">${section?.class_name}</td>
                     </tr>
                   `;
             })
@@ -695,6 +724,7 @@
               last_name: formData.get("last_name"),
               date_of_birth: formData.get("date_of_birth"),
               lrn: formData.get("student_lrn"),
+              class_id: formData.get("classes_id"),
             }),
           });
 
