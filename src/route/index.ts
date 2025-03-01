@@ -38,4 +38,12 @@ export default abstract class Router {
   ): Promise<boolean> {
     return await bcrypt.compare(password, hash);
   }
+
+  public textToNumbers(text: string): string {
+    return text
+      .toLowerCase()
+      .split("")
+      .map((c) => c.charCodeAt(0) - 96)
+      .join("");
+  }
 }

@@ -16,7 +16,7 @@ app.use(
   sessionMiddleware({
     store,
     encryptionKey: process.env.ENCRYPTION_KEY,
-    expireAfterSeconds: 300,
+    expireAfterSeconds: 900,
     cookieOptions: {
       sameSite: "Lax",
       path: "/",

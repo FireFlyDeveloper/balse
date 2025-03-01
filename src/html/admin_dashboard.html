@@ -72,6 +72,14 @@
           </li>
           <li>
             <a
+              href="#sections"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-grid mr-2"></i> Sections
+            </a>
+          </li>
+          <li>
+            <a
               href="#teachers"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
@@ -84,14 +92,6 @@
               class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
             >
               <i class="bi bi-layers mr-2"></i> Strands
-            </a>
-          </li>
-          <li>
-            <a
-              href="#sections"
-              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
-            >
-              <i class="bi bi-grid mr-2"></i> Sections
             </a>
           </li>
         </ul>
@@ -168,13 +168,13 @@
 
     <script>
       fetch("/departments", {
-        method: "POST",
+        method: "GET",
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => response.json())
         .then((data) => {
           if (!data.loggedIn) {
-            window.location.href = "/login-root";
+            window.location.href = "/login-admin";
           } else {
             const departments = data.data;
             const departmentTableBody = document.getElementById(
@@ -187,7 +187,7 @@
               row.className = "hover:bg-blue-50 cursor-pointer transition-all";
               row.onclick = () => redirectToDepartmentDetail(department.id);
               row.innerHTML = `
-              <td class="p-4">${department.name}</td>
+              <td class="p-4">${department.department_name}</td>
             `;
               departmentTableBody.appendChild(row);
             });
@@ -244,7 +244,7 @@
           };
 
           try {
-            const response = await fetch("/create-department", {
+            const response = await fetch("/departments", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(data),
