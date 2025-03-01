@@ -7,7 +7,7 @@ class Login extends Router {
     try {
       const session = c.get("session");
 
-      if (!this.isStudent(session)) {
+      if (this.isStudent(session)) {
         return c.redirect("/student");
       }
 
@@ -23,7 +23,7 @@ class Login extends Router {
     try {
       const session = c.get("session");
 
-      if (!this.isTeacher(session)) {
+      if (this.isTeacher(session)) {
         return c.redirect("/teacher");
       }
 
@@ -39,7 +39,7 @@ class Login extends Router {
     try {
       const session = c.get("session");
 
-      if (!this.isAdmin(session)) {
+      if (this.isAdmin(session)) {
         return c.redirect("/admin");
       }
 
