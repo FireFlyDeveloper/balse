@@ -782,6 +782,11 @@
       document
         .getElementById("createStudentForm")
         .addEventListener("submit", handleStudentForm);
+
+        function redirectToDepartmentDetail(id) {
+            const url = `/info/department/${id}`; // Replace with the actual URL
+            window.open(url, '_blank'); // Opens in a new tab/window
+        }
     </script>
   </body>
 </html>
