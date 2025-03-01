@@ -126,6 +126,12 @@ export default class Database {
     return await this.client.db.Classes.delete(classId);
   }
 
+  async getClassDepartment(department_id: string) {
+    return await this.client.db.Classes.filter({
+      department_id: department_id,
+    }).getAll();
+  }
+
   /** ENROLLMENTS **/
   async enrollStudent(id: string, studentId: string, courseId: string) {
     return await this.client.db.Enrollments.create(id, {

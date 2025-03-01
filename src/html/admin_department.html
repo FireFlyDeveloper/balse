@@ -29,6 +29,9 @@
       .theme-yellow {
         color: #f59e0b;
       }
+      .hidden-section {
+        display: none;
+      }
     </style>
   </head>
   <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
@@ -58,6 +61,32 @@
       </div>
     </div>
 
+    <!-- Navigation -->
+    <nav class="bg-blue-700 text-white shadow-md">
+      <div class="max-w-6xl mx-auto px-4">
+        <ul class="flex space-x-6 p-4">
+          <li>
+            <a
+              href="#teachers"
+              onclick="showSection('teachers')"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-person-standing mr-2"></i> Teachers
+            </a>
+          </li>
+          <li>
+            <a
+              href="#sections"
+              onclick="showSection('sections')"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
+            >
+              <i class="bi bi-grid mr-2"></i> Sections
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <!-- Main Content -->
     <div class="dashboard-container max-w-6xl mx-auto px-4 py-8">
       <!-- Department Information Section -->
@@ -73,23 +102,46 @@
           <!-- Department details will be inserted dynamically -->
         </div>
 
-        <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
-          <i class="bi bi-person-standing mr-2 theme-blue mr-2"></i> Teachers in
-          this Department
-        </h3>
-        <div class="overflow-x-auto">
-          <table class="w-full bg-white rounded-lg shadow-sm">
-            <thead class="bg-blue-800 text-white">
-              <tr>
-                <th class="p-4 text-left">First Name</th>
-                <th class="p-4 text-left">Middle Name</th>
-                <th class="p-4 text-left">Last Name</th>
-              </tr>
-            </thead>
-            <tbody id="teacherTableBody" class="divide-y divide-blue-100">
-              <!-- Teachers will be inserted dynamically -->
-            </tbody>
-          </table>
+        <!-- Teachers Section -->
+        <div id="teachers" class="fade-in">
+          <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
+            <i class="bi bi-person-standing mr-2 theme-blue mr-2"></i> Teachers
+            in this Department
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-blue-800 text-white">
+                <tr>
+                  <th class="p-4 text-left">First Name</th>
+                  <th class="p-4 text-left">Middle Name</th>
+                  <th class="p-4 text-left">Last Name</th>
+                </tr>
+              </thead>
+              <tbody id="teacherTableBody" class="divide-y divide-blue-100">
+                <!-- Teachers will be inserted dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sections Section -->
+        <div id="sections" class="fade-in hidden-section">
+          <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
+            <i class="bi bi-grid mr-2 theme-blue mr-2"></i> Sections in this
+            Department
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full bg-white rounded-lg shadow-sm">
+              <thead class="bg-blue-800 text-white">
+                <tr>
+                  <th class="p-4 text-left">Section Name</th>
+                </tr>
+              </thead>
+              <tbody id="sectionTableBody" class="divide-y divide-blue-100">
+                <!-- Sections will be inserted dynamically -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -108,7 +160,15 @@
         }
       }
 
-      // Load department information and teachers
+      // Section visibility control
+      function showSection(sectionId) {
+        // Hide all sections except the department-info container
+        document.querySelectorAll("#teachers, #sections").forEach((div) => {
+          div.classList.toggle("hidden-section", div.id !== sectionId);
+        });
+      }
+
+      // Load department information, teachers, and sections
       async function loadDepartmentInfo() {
         const departmentId = window.location.pathname.split("/").pop(); // Extract ID from URL
 
@@ -140,6 +200,25 @@
               `,
             )
             .join("");
+
+          // Fetch sections for this department
+          const sectionsData = await fetchData(`/classes-department`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: departmentId }),
+          });
+
+          // Display sections
+          const sectionTableBody = document.getElementById("sectionTableBody");
+          sectionTableBody.innerHTML = sectionsData.data
+            .map(
+              (section) => `
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                  <td class="p-4">${section.class_name}</td>
+                </tr>
+              `,
+            )
+            .join("");
         } catch (error) {
           console.error("Loading department info failed:", error);
           alert("Failed to load department information. Please try again.");
@@ -161,6 +240,7 @@
       // Initial data load
       (async () => {
         await loadDepartmentInfo();
+        showSection("teachers"); // Default to showing teachers section
       })();
     </script>
   </body>

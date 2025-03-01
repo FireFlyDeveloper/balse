@@ -39,5 +39,6 @@ router.post("departments/info", (c) => admin.getTeachersDepartment(c));
 // Class Routes
 router.get("classes", (c) => admin.getAllClasses(c));
 router.post("classes", (c) => admin.createClass(c));
+router.post("classes-department", (c) => admin.getClassesDepartment(c));
 
 export default router;

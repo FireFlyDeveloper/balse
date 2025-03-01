@@ -325,6 +325,25 @@ class Admin extends Router {
       return c.json({ error: "Internal Server Error" }, 500);
     }
   }
+
+  async getClassesDepartment(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const class_ = await this.db.getClassDepartment(id);
+
+      return c.json({ loggedIn: true, data: class_ });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
 }
 
 export default new Admin();
