@@ -65,7 +65,7 @@ class Login extends Router {
 
       const user = await this.db.getStudentById(`${id}`);
 
-      if (user && await this.verifyPassword(password, user.password)) {
+      if (user && await this.verifyPassword(password, user.password_hash)) {
         const session = c.get("session");
         session.set("id", id);
         session.set("loggedIn", true);
@@ -97,7 +97,7 @@ class Login extends Router {
 
       const user = await this.db.getTeacherById(`${id}`);
 
-      if (user && await this.verifyPassword(password, user.password)) {
+      if (user && await this.verifyPassword(password, user.password_hash)) {
         const session = c.get("session");
         session.set("id", id);
         session.set("loggedIn", true);
@@ -129,7 +129,7 @@ class Login extends Router {
 
       const user = await this.db.getAdminById(`${id}`);
 
-      if (user && await this.verifyPassword(password, user.password)) {
+      if (user && await this.verifyPassword(password, user.password_hash)) {
         const session = c.get("session");
         session.set("id", id);
         session.set("loggedIn", true);
