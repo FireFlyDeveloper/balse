@@ -670,11 +670,11 @@
         const formData = new FormData(event.target);
 
         try {
-          await fetchData("/sections", {
+          await fetchData("/classes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              section_name: formData.get("section_name"),
+              name: formData.get("section_name"),
               departmentId: formData.get("department_id"),
             }),
           });
