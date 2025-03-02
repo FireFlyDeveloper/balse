@@ -73,11 +73,13 @@ class Admin extends Router {
       const { first_name, middle_name, last_name, departmentId } =
         await c.req.json();
 
-      const id = this.textToNumbers(
+      const name_ = this.textToNumbers(
         `${first_name}${middle_name}${last_name}`
           .replace(/\s/g, "")
           .toLowerCase(),
       );
+
+      const id = `${departmentId}${name_}`;
 
       const password = await this.hashPassword(
         `${this.capitalizeWords(first_name)}${this.capitalizeWords(last_name)}123`,
@@ -236,7 +238,8 @@ class Admin extends Router {
 
       const { name, departmentId, teacher_id } = await c.req.json();
 
-      const id = this.textToNumbers(`${name}+${departmentId}`);
+      const name_ = this.textToNumbers(`${name}`);
+      const id = `${departmentId}${name_}`;
 
       const course = await this.db.addCourse(
         id,
@@ -349,7 +352,8 @@ class Admin extends Router {
 
       const { name, departmentId } = await c.req.json();
 
-      const id = this.textToNumbers(name.replace(/\s/g, "").toLowerCase());
+      const name_ = this.textToNumbers(name.replace(/\s/g, "").toLowerCase());
+      const id = `${departmentId}${name_}`;
 
       const class_ = await this.db.addClass(id, name, departmentId);
 
