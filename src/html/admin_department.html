@@ -170,6 +170,7 @@
               <thead class="bg-blue-800 text-white">
                 <tr>
                   <th class="p-4 text-left">Course Name</th>
+                  <th class="p-4 text-left">Teacher</th>
                 </tr>
               </thead>
               <tbody id="courseTableBody" class="divide-y divide-blue-100">
@@ -199,6 +200,18 @@
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               required
             />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Teacher</label
+            >
+            <select
+              name="teacher_id"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <!-- Teachers will be populated dynamically -->
+            </select>
           </div>
           <div class="flex justify-end space-x-4">
             <button
@@ -276,6 +289,18 @@
             )
             .join("");
 
+          // Populate teacher dropdowns
+          document
+            .querySelectorAll('select[name="teacher_id"]')
+            .forEach((select) => {
+              select.innerHTML = departmentData.data.teachers
+                .map(
+                  (d) =>
+                    `<option value="${d.id}">${d.last_name}, ${d.first_name} ${d.middle_name}</option>`,
+                )
+                .join("");
+            });
+
           // Fetch sections for this department
           const sectionsData = await fetchData(`/departments/classes`, {
             method: "POST",
@@ -306,11 +331,17 @@
           const courseTableBody = document.getElementById("courseTableBody");
           courseTableBody.innerHTML = coursesData.data
             .map(
-              (course) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
-                  <td class="p-4">${course.course_name}</td>
-                </tr>
-              `,
+              (course) => {
+                const teacher = departmentData.data.teachers.find(
+                  (d) => d.id === course.teacher_id.id,
+                );
+                return `
+                  <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                    <td class="p-4">${course.course_name}</td>
+                    <td class="p-4">${teacher.last_name}, ${teacher.first_name} ${teacher.middle_name}</td>
+                  </tr>
+                `;
+              },
             )
             .join("");
         } catch (error) {
@@ -341,6 +372,7 @@
             body: JSON.stringify({
               name: formData.get("course_name"),
               departmentId: departmentId,
+              teacher_id: formData.get("teacher_id"),
             }),
           });
 

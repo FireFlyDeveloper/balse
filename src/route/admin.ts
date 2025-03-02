@@ -234,11 +234,11 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { name, departmentId } = await c.req.json();
+      const { name, departmentId, teacher_id } = await c.req.json();
 
       const id = this.textToNumbers(`${name}+${departmentId}`);
 
-      const course = await this.db.addCourse(id, name, departmentId);
+      const course = await this.db.addCourse(id, name, departmentId, teacher_id);
 
       return c.json({ loggedIn: true, data: course });
     } catch (error) {

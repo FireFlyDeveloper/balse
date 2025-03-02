@@ -628,7 +628,8 @@
                 (d) => d.id === student.class_id.id,
               );
               return `
-                    <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                    <tr class="hover:bg-blue-50 cursor-pointer transition-all"
+                    onclick="redirectToStudentDetail('${student.id}')">
                       <td class="p-4">${student.id}</td>
                       <td class="p-4">${student.first_name}</td>
                       <td class="p-4">${student.middle_name || ""}</td>
@@ -815,6 +816,11 @@
 
       function redirectToDepartmentDetail(id) {
         const url = `/departments/info/${id}`; // Replace with the actual URL
+        window.open(url, "_blank"); // Opens in a new tab/window
+      }
+
+      function redirectToStudentDetail(id) {
+        const url = `/students/info/${id}`; // Replace with the actual URL
         window.open(url, "_blank"); // Opens in a new tab/window
       }
     </script>
