@@ -330,19 +330,17 @@
           // Display courses
           const courseTableBody = document.getElementById("courseTableBody");
           courseTableBody.innerHTML = coursesData.data
-            .map(
-              (course) => {
-                const teacher = departmentData.data.teachers.find(
-                  (d) => d.id === course.teacher_id.id,
-                );
-                return `
+            .map((course) => {
+              const teacher = departmentData.data.teachers.find(
+                (d) => d.id === course.teacher_id.id,
+              );
+              return `
                   <tr class="hover:bg-blue-50 cursor-pointer transition-all">
                     <td class="p-4">${course.course_name}</td>
                     <td class="p-4">${teacher.last_name}, ${teacher.first_name} ${teacher.middle_name}</td>
                   </tr>
                 `;
-              },
-            )
+            })
             .join("");
         } catch (error) {
           console.error("Loading department info failed:", error);

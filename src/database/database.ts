@@ -56,7 +56,12 @@ export default class Database {
   }
 
   /** COURSES **/
-  async addCourse(id: string, name: string, departmentId: string, teacher_id: string) {
+  async addCourse(
+    id: string,
+    name: string,
+    departmentId: string,
+    teacher_id: string,
+  ) {
     return await this.client.db.Courses.create(id, {
       course_name: name,
       department_id: departmentId,

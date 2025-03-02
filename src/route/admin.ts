@@ -238,7 +238,12 @@ class Admin extends Router {
 
       const id = this.textToNumbers(`${name}+${departmentId}`);
 
-      const course = await this.db.addCourse(id, name, departmentId, teacher_id);
+      const course = await this.db.addCourse(
+        id,
+        name,
+        departmentId,
+        teacher_id,
+      );
 
       return c.json({ loggedIn: true, data: course });
     } catch (error) {
