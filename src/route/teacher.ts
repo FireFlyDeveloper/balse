@@ -99,6 +99,34 @@ class Teacher extends Router {
     }
   }
 
+  async getGradesStudentId(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const courses = await this.db.getGradesByStudent(id);
+
+      const data = courses.map((course: any) => {
+        return {
+          grade: course.grade,
+          grading_period: course.grading_period,
+          coures_id: course.course_id.id,
+          course_name: course.course_id.course_name,
+        };
+      });
+
+      return c.json({ loggedIn: true, data: data });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** TEACHER ***/
   async getTeacherById(c: Context) {
     try {
@@ -213,7 +241,32 @@ class Teacher extends Router {
 
       const student = await this.db.getGradesByStudent(id);
 
-      console.log(JSON.stringify(student, null, 2));
+      return c.json({ loggedIn: true, data: student });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async addGrades(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { studentId, courseId, grade, grading_period } = await c.req.json();
+
+      const id = `${courseId}${studentId}`;
+
+      const student = await this.db.addGrade(
+        id,
+        studentId,
+        courseId,
+        grade,
+        grading_period,
+      );
 
       return c.json({ loggedIn: true, data: student });
     } catch (error) {

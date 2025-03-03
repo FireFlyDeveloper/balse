@@ -221,8 +221,6 @@
             body: JSON.stringify({ id: studentId }),
           });
 
-          console.log(grades.data);
-
           // Display grades
           const gradesTableBody = document.getElementById("gradesTableBody");
           gradesTableBody.innerHTML = grades.data
@@ -237,15 +235,13 @@
             )
             .join("");
 
-          const courses = await fetchData("/teacher/students/grades", {
+          const courses = await fetchData("/teacher/students/enrolled", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               id: studentData.data.id,
             }),
           });
-
-          console.log(courses.data);
 
           // Populate course dropdown
           const courseSelect = document.getElementById("courseSelect");
@@ -269,7 +265,7 @@
         const studentId = window.location.pathname.split("/").pop();
 
         try {
-          await fetchData(`/students/add-grade`, {
+          await fetchData(`/teacher/students/add-grades`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

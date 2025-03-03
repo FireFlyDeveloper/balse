@@ -232,9 +232,15 @@ export default class Database {
   }
 
   async getGradesByStudent(studentId: string) {
-    return await this.client.db.Grades.filter({
-      student_id: studentId,
-    }).getAll();
+    return await this.client.db.Grades.select([
+      "course_id",
+      "grade",
+      "grading_period",
+    ])
+      .filter({
+        student_id: studentId,
+      })
+      .getAll();
   }
 
   async getGradesByCourse(courseId: string) {
