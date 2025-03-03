@@ -46,16 +46,29 @@
               class="w-16 h-16 rounded-full border-4 border-yellow-400 shadow-lg"
             />
             <h1 class="text-2xl font-bold text-white">
-              Balayan Senior High School - Teacher Dashboard
+              Balayan Senior High School - Teacher
             </h1>
           </div>
           <div class="flex items-center space-x-3">
-            <button
-              onclick="logout()"
-              class="bg-yellow-400 text-blue-800 px-6 py-2 rounded-lg hover:bg-yellow-500 transition flex items-center"
-            >
-              <i class="bi bi-box-arrow-left mr-2"></i> Logout
-            </button>
+            <div class="user-avatar flex items-center space-x-3">
+              <div class="text-right">
+                <p class="text-yellow-400 font-semibold">Welcome back,</p>
+                <p class="text-white" id="teacher-name">Loading...</p>
+              </div>
+              <div
+                class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center"
+              >
+                <i class="bi bi-person-fill text-2xl text-blue-800"></i>
+              </div>
+            </div>
+            <div class="flex items-center space-x-3">
+              <button
+                onclick="logout()"
+                class="bg-yellow-400 text-blue-800 px-6 py-2 rounded-lg hover:bg-yellow-500 transition flex items-center"
+              >
+                <i class="bi bi-box-arrow-left mr-2"></i> Logout
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -78,7 +91,6 @@
             <table class="w-full bg-white rounded-lg shadow-sm">
               <thead class="bg-blue-800 text-white">
                 <tr>
-                  <th class="p-4 text-left">Course ID</th>
                   <th class="p-4 text-left">Course Name</th>
                 </tr>
               </thead>
@@ -110,6 +122,15 @@
         const teacherId = window.location.pathname.split("/").pop(); // Extract teacher ID from URL
 
         try {
+          const teachersData = await fetchData(`/teacher/info`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: teacherId }),
+          });
+
+          document.getElementById("teacher-name").textContent =
+            `${teachersData.data.first_name} ${teachersData.data.middle_name} ${teachersData.data.last_name}`;
+
           // Fetch courses assigned to the teacher
           const coursesData = await fetchData(`/teacher/courses`, {
             method: "POST",
@@ -122,8 +143,8 @@
           coursesTableBody.innerHTML = coursesData.data
             .map(
               (course) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
-                  <td class="p-4">${course.id}</td>
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all"
+                onClick="redirectToCourseClasses('${course.id}')">
                   <td class="p-4">${course.course_name}</td>
                 </tr>
               `,
@@ -145,6 +166,11 @@
           console.error("Logout error:", error);
           alert("Logout failed. Please try again.");
         }
+      }
+
+      function redirectToCourseClasses(id) {
+        const url = `/teachers/class/${id}`; // Replace with the actual URL
+        window.open(url, "_blank"); // Opens in a new tab/window
       }
 
       // Initial data load

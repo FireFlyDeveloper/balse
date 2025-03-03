@@ -40,6 +40,26 @@ class Teacher extends Router {
       return c.json({ error: "Internal Server Error" }, 500);
     }
   }
+
+  /** TEACHER ***/
+  async getTeacherById(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const course = await this.db.getTeacherById(id);
+
+      return c.json({ loggedIn: true, data: course });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
 }
 
 export default new Teacher();

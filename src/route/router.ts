@@ -63,4 +63,7 @@ router.get("teacher/:id", (c) => teacher.teacher(c));
 // Course Routes
 router.post("teacher/courses", (c) => teacher.getCourses(c));
 
+// Teachers Routes
+router.post("teacher/info", (c) => teacher.getTeacherById(c));
+
 export default router;
