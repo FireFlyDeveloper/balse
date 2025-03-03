@@ -21,22 +21,6 @@ class Teacher extends Router {
     }
   }
 
-  async class(c: Context) {
-    try {
-      const session = c.get("session");
-
-      if (!this.isTeacher(session)) {
-        return c.redirect("/login-teacher");
-      }
-
-      const html = await this.rf(`${this.dir}/teachers_class.html`, "utf-8");
-      return c.html(html);
-    } catch (error) {
-      console.error(error);
-      return c.json({ error: "Internal Server Error" }, 500);
-    }
-  }
-
   async student(c: Context) {
     try {
       const session = c.get("session");
