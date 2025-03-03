@@ -8,7 +8,7 @@ class Login extends Router {
       const session = c.get("session");
 
       if (this.isStudent(session)) {
-        return c.redirect("/student");
+        return c.redirect(`/student/${session.get("id")}`);
       }
 
       const html = await this.rf(`${this.dir}/student_login.html`, "utf-8");
@@ -70,7 +70,7 @@ class Login extends Router {
         session.set("id", id);
         session.set("loggedIn", true);
         session.set("role", Role.Student);
-        return c.redirect("/student");
+        return c.redirect(`/student/${id}`);
       }
 
       return c.json(
