@@ -165,6 +165,15 @@ export default class Database {
     }).getAll();
   }
 
+  async getEnrolledByStudentId(studentId: string) {
+    return await this.client.db.Enrollments.select([
+      "course_id",
+      "enrollment_date",
+    ])
+      .filter({ student_id: studentId })
+      .getAll();
+  }
+
   async deleteEnrollment(enrollmentId: string) {
     return await this.client.db.Enrollments.delete(enrollmentId);
   }

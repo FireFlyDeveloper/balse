@@ -35,6 +35,22 @@ class Admin extends Router {
     }
   }
 
+  async student(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.redirect("/login-admin");
+      }
+
+      const html = await this.rf(`${this.dir}/admin_student.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** TEACHERS **/
   async getAllTeachers(c: Context) {
     try {
@@ -197,6 +213,34 @@ class Admin extends Router {
       const student = await this.db.createStudent(lrn, data);
 
       return c.json({ loggedIn: true, data: student });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getStudentInfoById(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const student = await this.db.getStudentById(id);
+
+      const data = {
+        id: student.id,
+        first_name: student.first_name,
+        middle_name: student.middle_name,
+        last_name: student.last_name,
+        date_of_birth: student.date_of_birth,
+        enrollment_date: student.enrollment_date,
+      };
+
+      return c.json({ loggedIn: true, data: data });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
@@ -377,6 +421,47 @@ class Admin extends Router {
       const class_ = await this.db.getClassDepartment(id);
 
       return c.json({ loggedIn: true, data: class_ });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  /*** ENROLL ***/
+  async enrollStudent(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { studentId, courseId } = await c.req.json();
+
+      const id = `${studentId}${courseId}`;
+
+      const enrolled = await this.db.enrollStudent(id, studentId, courseId);
+
+      return c.json({ loggedIn: true, data: enrolled });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getEnrollCourse(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const courses = await this.db.getEnrolledByStudentId(id);
+
+      return c.json({ loggedIn: true, data: courses });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
