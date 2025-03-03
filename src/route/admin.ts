@@ -192,6 +192,33 @@ class Admin extends Router {
     }
   }
 
+  async updateTeacher(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id, first_name, middle_name, last_name, department_id, department_name } = await c.req.json();
+
+      const data = {
+        first_name,
+        middle_name,
+        last_name,
+        department_id,
+        department_name,
+      };
+
+      await this.db.updateTeacher(id, data);
+
+      return c.json({ loggedIn: true });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** STUDENTS **/
   async getAllStudents(c: Context) {
     try {
