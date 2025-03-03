@@ -63,7 +63,7 @@ class Login extends Router {
         );
       }
 
-      const user = await this.db.getStudentById(`${id}`);
+      const user = await this.db.getStudentPasswordById(`${id}`);
 
       if (user && (await this.verifyPassword(password, user.password_hash))) {
         const session = c.get("session");

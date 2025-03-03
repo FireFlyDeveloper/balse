@@ -22,6 +22,9 @@ export default class Database {
       "class_id",
     ]);
   }
+  async getStudentPasswordById(studentId: string) {
+    return await this.client.db.Students.read(studentId, ["password_hash"]);
+  }
 
   async getAllStudents() {
     return await this.client.db.Students.getAll();
