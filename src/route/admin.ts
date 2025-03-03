@@ -630,7 +630,26 @@ class Admin extends Router {
       });
 
       await this.db.deleteCourse(id);
-      await this.db.deleteEnrollment(data);
+      await this.db.deleteEnrollments(data);
+
+      return c.json({ loggedIn: true });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async deleteEnrollment(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      await this.db.deleteEnrollment(id);
 
       return c.json({ loggedIn: true });
     } catch (error) {

@@ -54,5 +54,6 @@ router.post("departments/classes", (c) => admin.getClassesDepartment(c));
 // Enrollment Routes
 router.post("students/enroll", (c) => admin.enrollStudent(c));
 router.post("students/enrolled", (c) => admin.getEnrollCourse(c));
+router.post("students/unenrolled", (c) => admin.deleteEnrollment(c));
 
 export default router;

@@ -198,7 +198,11 @@ export default class Database {
       .getAll();
   }
 
-  async deleteEnrollment(enrollmentId: string[]) {
+  async deleteEnrollments(enrollmentId: string[]) {
+    return await this.client.db.Enrollments.delete(enrollmentId);
+  }
+
+  async deleteEnrollment(enrollmentId: string) {
     return await this.client.db.Enrollments.delete(enrollmentId);
   }
 
