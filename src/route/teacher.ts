@@ -21,6 +21,22 @@ class Teacher extends Router {
     }
   }
 
+  async info(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.redirect("/login-teacher");
+      }
+
+      const html = await this.rf(`${this.dir}/teachers_info.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   async student(c: Context) {
     try {
       const session = c.get("session");
@@ -51,6 +67,32 @@ class Teacher extends Router {
       const course = await this.db.getCourseTeacher(id);
 
       return c.json({ loggedIn: true, data: course });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getCoursesStudentId(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const courses = await this.db.getEnrollmentsByStudent(id);
+
+      const data = courses.map((course: any) => {
+        return {
+          coures_id: course.course_id.id,
+          course_name: course.course_id.course_name,
+        };
+      });
+
+      return c.json({ loggedIn: true, data: data });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
@@ -122,6 +164,58 @@ class Teacher extends Router {
       }));
 
       return c.json({ loggedIn: true, data: students });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getStudentInfoById(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const student = await this.db.getStudentById(id);
+
+      const data = {
+        id: student.id,
+        first_name: student.first_name,
+        middle_name: student.middle_name,
+        last_name: student.last_name,
+        date_of_birth: student.date_of_birth,
+        enrollment_date: student.enrollment_date,
+        department_id: student.class_id.department_id.id,
+        class_name: student.class_id.class_name,
+      };
+
+      return c.json({ loggedIn: true, data: data });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  /*** GRADES ***/
+  async getStudentGrades(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const student = await this.db.getGradesByStudent(id);
+
+      console.log(JSON.stringify(student, null, 2));
+
+      return c.json({ loggedIn: true, data: student });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);

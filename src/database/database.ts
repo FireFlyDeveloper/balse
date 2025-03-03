@@ -184,9 +184,11 @@ export default class Database {
   }
 
   async getEnrollmentsByStudent(studentId: string) {
-    return await this.client.db.Enrollments.filter({
-      student_id: studentId,
-    }).getAll();
+    return await this.client.db.Enrollments.select(["course_id"])
+      .filter({
+        student_id: studentId,
+      })
+      .getAll();
   }
 
   async getEnrollmentsByCourse(courseId: string) {

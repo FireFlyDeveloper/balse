@@ -126,7 +126,8 @@
           studentsTableBody.innerHTML = studentsData.data
             .map(
               (student) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all"
+                onClick="redirectToInfoStudent('${student.id}')">
                   <td class="p-4">${student.first_name}</td>
                   <td class="p-4">${student.last_name}</td>
                   <td class="p-4">${student.middle_name || "N/A"}</td>
@@ -152,6 +153,11 @@
           console.error("Logout error:", error);
           alert("Logout failed. Please try again.");
         }
+      }
+
+      function redirectToInfoStudent(id) {
+        const url = `/teacher/students/info/${id}`; // Replace with the actual URL
+        window.open(url, "_blank"); // Opens in a new tab/window
       }
 
       // Initial data load
