@@ -181,7 +181,7 @@
             <p class="text-lg"><strong>Middle Name:</strong> ${studentData.data.middle_name || "N/A"}</p>
             <p class="text-lg"><strong>Last Name:</strong> ${studentData.data.last_name}</p>
             <p class="text-lg"><strong>Date of Birth:</strong> ${studentData.data.date_of_birth}</p>
-            <p class="text-lg"><strong>Enrollment Date:</strong> ${studentData.data.enrollment_date}</p>
+            <p class="text-lg"><strong>Enrollment Date:</strong> ${(new Date(studentData.data.enrollment_date).toLocaleString())}</p>
           `;
 
           const enrolled = await fetchData('/students/enrolled', {
