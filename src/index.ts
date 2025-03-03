@@ -30,6 +30,7 @@ app.post("/logout", async (c: Context) => {
   session.forget("id");
   session.forget("loggedIn");
   session.forget("role");
+  return c.json({ message: "Logged out successfully" });
 });
 
 app.get("/", (c: Context) => {
