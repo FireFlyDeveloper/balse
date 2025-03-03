@@ -37,6 +37,22 @@ class Teacher extends Router {
     }
   }
 
+  async student(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.redirect("/login-teacher");
+      }
+
+      const html = await this.rf(`${this.dir}/teachers_student.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** COURSES **/
   async getCourses(c: Context) {
     try {
@@ -91,6 +107,37 @@ class Teacher extends Router {
       const class_ = await this.db.getClassDepartment(id);
 
       return c.json({ loggedIn: true, data: class_ });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  /** STUDENTS ***/
+  async getClassesStudents(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const data = await this.db.getStudentClass(id);
+
+      const students = data.map((student: any) => ({
+        id: student.id,
+        first_name: student.first_name,
+        last_name: student.last_name,
+        middle_name: student.middle_name,
+        email: student.email,
+        date_of_birth: student.date_of_birth,
+        enrollment_date: student.enrollment_date,
+        class_id: student.class_id,
+      }));
+
+      return c.json({ loggedIn: true, data: students });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
