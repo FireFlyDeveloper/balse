@@ -13,7 +13,14 @@ export default class Database {
   }
 
   async getStudentById(studentId: string) {
-    return await this.client.db.Students.read(studentId);
+    return await this.client.db.Students.read(studentId, [
+      "first_name",
+      "middle_name",
+      "last_name",
+      "date_of_birth",
+      "enrollment_date",
+      "class_id",
+    ]);
   }
 
   async getAllStudents() {

@@ -238,6 +238,8 @@ class Admin extends Router {
         last_name: student.last_name,
         date_of_birth: student.date_of_birth,
         enrollment_date: student.enrollment_date,
+        department_id: student.class_id.department_id.id,
+        class_name: student.class_id.class_name,
       };
 
       return c.json({ loggedIn: true, data: data });
