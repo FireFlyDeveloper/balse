@@ -315,7 +315,8 @@
           sectionTableBody.innerHTML = sectionsData.data
             .map(
               (section) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all"
+                onclick="redirectToClassDetail('${section.id}')">
                   <td class="p-4">${section.class_name}</td>
                 </tr>
               `,
@@ -425,6 +426,11 @@
 
       function redirectToTeacherDetail(id) {
         const url = `/teachers/info/${id}`; // Replace with the actual URL
+        window.open(url, "_blank"); // Opens in a new tab/window
+      }
+
+      function redirectToClassDetail(id) {
+        const url = `/students/class/${id}`; // Replace with the actual URL
         window.open(url, "_blank"); // Opens in a new tab/window
       }
 
