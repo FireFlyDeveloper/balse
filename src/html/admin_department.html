@@ -171,6 +171,7 @@
                 <tr>
                   <th class="p-4 text-left">Course Name</th>
                   <th class="p-4 text-left">Teacher</th>
+                  <th class="p-4 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody id="courseTableBody" class="divide-y divide-blue-100">
@@ -338,6 +339,14 @@
                   <tr class="hover:bg-blue-50 cursor-pointer transition-all">
                     <td class="p-4">${course.course_name}</td>
                     <td class="p-4">${teacher.last_name}, ${teacher.first_name} ${teacher.middle_name}</td>
+                    <td class="p-4">
+                      <button
+                        onclick="deleteCourse('${course.id}')"
+                        class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                      >
+                        <i class="bi bi-trash"></i> Delete
+                      </button>
+                    </td>
                   </tr>
                 `;
             })
@@ -345,6 +354,25 @@
         } catch (error) {
           console.error("Loading department info failed:", error);
           alert("Failed to load department information. Please try again.");
+        }
+      }
+
+      // Function to delete a course
+      async function deleteCourse(courseId) {
+        if (confirm("Are you sure you want to delete this course?")) {
+          try {
+            await fetchData(`/departments/delete-courses`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: courseId }),
+            });
+
+            alert("Course deleted successfully!");
+            await loadDepartmentInfo(); // Refresh the courses list
+          } catch (error) {
+            console.error("Error deleting course:", error);
+            alert("Failed to delete course. Please try again.");
+          }
         }
       }
 

@@ -32,6 +32,7 @@ router.post("students/info", (c) => admin.getStudentInfoById(c));
 router.get("courses", (c) => admin.getAllCourses(c));
 router.post("courses", (c) => admin.createCourse(c));
 router.post("departments/courses", (c) => admin.getCourseDepartment(c));
+router.post("departments/delete-courses", (c) => admin.deleteCourse(c));
 
 // Department Routes
 router.get("departments", (c) => admin.getAllDepartments(c));
