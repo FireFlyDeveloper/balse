@@ -200,7 +200,14 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { id, first_name, middle_name, last_name, department_id, department_name } = await c.req.json();
+      const {
+        id,
+        first_name,
+        middle_name,
+        last_name,
+        department_id,
+        department_name,
+      } = await c.req.json();
 
       const data = {
         first_name,
@@ -570,9 +577,16 @@ class Admin extends Router {
 
       const { id } = await c.req.json();
 
-      const courses = await this.db.deleteCourse(id);
+      const enroll = await this.db.getEnrollmentsByCourse(id);
 
-      return c.json({ loggedIn: true, data: courses });
+      const data = enroll.map((id: any) => {
+        return `${id.id}`;
+      });
+
+      await this.db.deleteCourse(id);
+      await this.db.deleteEnrollment(data);
+
+      return c.json({ loggedIn: true });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);
