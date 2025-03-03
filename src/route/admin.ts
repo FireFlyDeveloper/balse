@@ -51,6 +51,22 @@ class Admin extends Router {
     }
   }
 
+  async teacher(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.redirect("/login-admin");
+      }
+
+      const html = await this.rf(`${this.dir}/admin_teacher.html`, "utf-8");
+      return c.html(html);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
   /** TEACHERS **/
   async getAllTeachers(c: Context) {
     try {
@@ -140,6 +156,34 @@ class Admin extends Router {
       }));
 
       const data = { department_name: department.department_name, teachers };
+
+      return c.json({ loggedIn: true, data: data });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getTeacherInfoById(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const teacher = await this.db.getTeacherById(id);
+
+      const data = {
+        id: teacher.id,
+        first_name: teacher.first_name,
+        middle_name: teacher.middle_name,
+        last_name: teacher.last_name,
+        department_id: teacher.department_id.id,
+        department_name: teacher.department_id.department_name,
+      };
 
       return c.json({ loggedIn: true, data: data });
     } catch (error) {
@@ -312,6 +356,25 @@ class Admin extends Router {
       const { id } = await c.req.json();
 
       const course = await this.db.getCourseDepartment(id);
+
+      return c.json({ loggedIn: true, data: course });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async getCourseTeacher(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id } = await c.req.json();
+
+      const course = await this.db.getCourseTeacher(id);
 
       return c.json({ loggedIn: true, data: course });
     } catch (error) {

@@ -281,7 +281,8 @@
           teacherTableBody.innerHTML = departmentData.data.teachers
             .map(
               (teacher) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all"
+                onclick="redirectToTeacherDetail('${teacher.id}')">
                   <td class="p-4">${teacher.first_name}</td>
                   <td class="p-4">${teacher.middle_name || ""}</td>
                   <td class="p-4">${teacher.last_name}</td>
@@ -420,6 +421,11 @@
           console.error("Logout error:", error);
           alert("Logout failed. Please try again.");
         }
+      }
+
+      function redirectToTeacherDetail(id) {
+        const url = `/teachers/info/${id}`; // Replace with the actual URL
+        window.open(url, "_blank"); // Opens in a new tab/window
       }
 
       // Initial data load

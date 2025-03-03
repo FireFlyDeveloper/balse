@@ -21,6 +21,8 @@ router.get("admin", (c) => admin.admin(c));
 
 router.get("teachers", (c) => admin.getAllTeachers(c));
 router.post("teachers", (c) => admin.createTeacher(c));
+router.get("teachers/info/:id", (c) => admin.teacher(c));
+router.post("teachers/info", (c) => admin.getTeacherInfoById(c));
 
 // Student Routes
 router.get("students", (c) => admin.getAllStudents(c));
@@ -32,6 +34,7 @@ router.post("students/info", (c) => admin.getStudentInfoById(c));
 router.get("courses", (c) => admin.getAllCourses(c));
 router.post("courses", (c) => admin.createCourse(c));
 router.post("departments/courses", (c) => admin.getCourseDepartment(c));
+router.post("departments/teacher-courses", (c) => admin.getCourseTeacher(c));
 router.post("departments/delete-courses", (c) => admin.deleteCourse(c));
 
 // Department Routes

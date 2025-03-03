@@ -41,7 +41,12 @@ export default class Database {
   }
 
   async getTeacherById(teacherId: string) {
-    return await this.client.db.Teachers.read(teacherId);
+    return await this.client.db.Teachers.read(teacherId, [
+      "first_name",
+      "middle_name",
+      "last_name",
+      "department_id",
+    ]);
   }
 
   async getAllTeachers() {
@@ -95,6 +100,12 @@ export default class Database {
   async getCourseDepartment(department_id: string) {
     return await this.client.db.Courses.filter({
       department_id: department_id,
+    }).getAll();
+  }
+
+  async getCourseTeacher(teacher_id: string) {
+    return await this.client.db.Courses.filter({
+      teacher_id: teacher_id,
     }).getAll();
   }
 
