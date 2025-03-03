@@ -55,6 +55,10 @@ export default class Database {
     ]);
   }
 
+  async getTeacherByID(teacherId: string) {
+    return await this.client.db.Teachers.read(teacherId);
+  }
+
   async getAllTeachers() {
     return await this.client.db.Teachers.getAll();
   }

@@ -24,7 +24,7 @@ class Login extends Router {
       const session = c.get("session");
 
       if (this.isTeacher(session)) {
-        return c.redirect("/teacher");
+        return c.redirect(`/teacher/${session.get("id")}`);
       }
 
       const html = await this.rf(`${this.dir}/teachers_login.html`, "utf-8");
@@ -95,14 +95,14 @@ class Login extends Router {
         );
       }
 
-      const user = await this.db.getTeacherById(`${id}`);
+      const user = await this.db.getTeacherByID(`${id}`);
 
       if (user && (await this.verifyPassword(password, user.password_hash))) {
         const session = c.get("session");
         session.set("id", id);
         session.set("loggedIn", true);
         session.set("role", Role.Teacher);
-        return c.redirect("/teacher");
+        return c.redirect(`/teacher/${id}`);
       }
 
       return c.json(
