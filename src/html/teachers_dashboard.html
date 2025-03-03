@@ -144,7 +144,7 @@
             .map(
               (course) => `
                 <tr class="hover:bg-blue-50 cursor-pointer transition-all"
-                onClick="redirectToCourseClasses('${course.id}')">
+                onClick="redirectToCourseClasses('${teachersData.data.department_id.id}')">
                   <td class="p-4">${course.course_name}</td>
                 </tr>
               `,
