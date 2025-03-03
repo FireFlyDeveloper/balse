@@ -35,6 +35,12 @@ export default class Database {
     return await this.client.db.Students.delete(studentId);
   }
 
+  async getStudentClass(class_id: string) {
+    return await this.client.db.Students.filter({
+      class_id: class_id,
+    }).getAll();
+  }
+
   /** TEACHERS **/
   async createTeacher(id: string, data: any) {
     return await this.client.db.Teachers.create(id, data);

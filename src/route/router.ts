@@ -30,6 +30,8 @@ router.get("students", (c) => admin.getAllStudents(c));
 router.post("students", (c) => admin.createStudent(c));
 router.get("students/info/:id", (c) => admin.student(c));
 router.post("students/info", (c) => admin.getStudentInfoById(c));
+router.post("students/class", (c) => admin.getStudentsClass(c));
+router.get("students/class/:id", (c) => admin.class(c));
 
 // Course Routes
 router.get("courses", (c) => admin.getAllCourses(c));
