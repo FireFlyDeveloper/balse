@@ -68,5 +68,6 @@ router.post("teacher/info", (c) => teacher.getTeacherById(c));
 
 // Classes Routes
 router.post("teacher/classes", (c) => teacher.getClassesDepartment(c));
+router.get("teacher/class/:id", (c) => teacher.class(c));
 
 export default router;

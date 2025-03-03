@@ -167,9 +167,11 @@ export default class Database {
   }
 
   async getClassDepartment(department_id: string) {
-    return await this.client.db.Classes.filter({
-      department_id: department_id,
-    }).getAll();
+    return await this.client.db.Classes.select(["class_name", "department_id"])
+      .filter({
+        department_id: department_id,
+      })
+      .getAll();
   }
 
   /** ENROLLMENTS **/
