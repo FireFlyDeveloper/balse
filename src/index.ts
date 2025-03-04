@@ -2,6 +2,7 @@ import { Context, Hono } from "hono";
 import { Session, sessionMiddleware, CookieStore } from "hono-sessions";
 import { SessionDataTypes } from "./models/types";
 import router from "./route/router";
+import { readFile } from "fs/promises";
 
 const app = new Hono<{
   Variables: {
@@ -10,6 +11,15 @@ const app = new Hono<{
 }>();
 
 const store = new CookieStore();
+
+app.notFound(async (c: Context) => {
+  try {
+    const html = await readFile("./src/html/404.html", "utf-8");
+    return c.html(html, 404);
+  } catch (error) {
+    return c.text("404 - Page Not Found", 404);
+  }
+});
 
 app.use(
   "*",
