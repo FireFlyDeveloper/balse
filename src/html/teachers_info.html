@@ -15,25 +15,31 @@
           opacity: 0;
           transform: translateY(20px);
         }
+
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
+
       .fade-in {
         animation: fadeIn 0.8s ease-out;
       }
+
       .theme-blue {
         color: #1d4ed8;
       }
+
       .theme-yellow {
         color: #f59e0b;
       }
+
       .hidden-section {
         display: none;
       }
     </style>
   </head>
+
   <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
     <!-- Header -->
     <div class="w-full bg-blue-800 shadow-lg">
@@ -207,14 +213,15 @@
           // Display student details
           const studentDetails = document.getElementById("studentDetails");
           studentDetails.innerHTML = `
-            <p class="text-lg"><strong>First Name:</strong> ${studentData.data.first_name}</p>
-            <p class="text-lg"><strong>Middle Name:</strong> ${studentData.data.middle_name || "N/A"}</p>
-            <p class="text-lg"><strong>Last Name:</strong> ${studentData.data.last_name}</p>
-            <p class="text-lg"><strong>Date of Birth:</strong> ${studentData.data.date_of_birth}</p>
-            <p class="text-lg"><strong>Enrollment Date:</strong> ${new Date(studentData.data.enrollment_date).toLocaleString()}</p>
-            <p class="text-lg"><strong>Class Name:</strong> ${studentData.data.class_name}</p>
-          `;
+      <p class="text-lg"><strong>First Name:</strong> ${studentData.data.first_name}</p>
+      <p class="text-lg"><strong>Middle Name:</strong> ${studentData.data.middle_name || "N/A"}</p>
+      <p class="text-lg"><strong>Last Name:</strong> ${studentData.data.last_name}</p>
+      <p class="text-lg"><strong>Date of Birth:</strong> ${studentData.data.date_of_birth}</p>
+      <p class="text-lg"><strong>Enrollment Date:</strong> ${new Date(studentData.data.enrollment_date).toLocaleString()}</p>
+      <p class="text-lg"><strong>Class Name:</strong> ${studentData.data.class_name}</p>
+    `;
 
+          // Fetch grades
           const grades = await fetchData("/teacher/students/grades", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -226,15 +233,16 @@
           gradesTableBody.innerHTML = grades.data
             .map(
               (grade) => `
-                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
-                  <td class="p-4">${grade.course_name}</td>
-                  <td class="p-4">${grade.grade || "N/A"}</td>
-                  <td class="p-4">${grade.grading_period || "N/A"}</td>
-                </tr>
-              `,
+          <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+            <td class="p-4">${grade.course_name}</td>
+            <td class="p-4">${grade.grade || "N/A"}</td>
+            <td class="p-4">${grade.grading_period || "N/A"}</td>
+          </tr>
+        `,
             )
             .join("");
 
+          // Fetch enrolled courses
           const courses = await fetchData("/teacher/students/enrolled", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -243,13 +251,21 @@
             }),
           });
 
+          // Filter out courses that have already been graded
+          const gradedCourseIds = new Set(
+            grades.data.map((grade) => grade.course_id),
+          );
+          const availableCourses = courses.data.filter(
+            (course) => !gradedCourseIds.has(course.course_id),
+          );
+
           // Populate course dropdown
           const courseSelect = document.getElementById("courseSelect");
-          courseSelect.innerHTML = courses.data
+          courseSelect.innerHTML = availableCourses
             .map(
               (course) => `
-                <option value="${course.coures_id}">${course.course_name}</option>
-              `,
+          <option value="${course.course_id}">${course.course_name}</option>
+        `,
             )
             .join("");
         } catch (error) {
