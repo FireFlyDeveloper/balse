@@ -151,6 +151,9 @@
             body: JSON.stringify({ id: studentId }),
           });
 
+          document.getElementById("student-name").textContent =
+            `${studentData.data.first_name} ${studentData.data.middle_name} ${studentData.data.last_name}`;
+
           // Display student details
           const studentDetails = document.getElementById("studentDetails");
           studentDetails.innerHTML = `
