@@ -66,6 +66,10 @@ class Student extends Router {
         return {
           coures_id: course.course_id.id,
           course_name: course.course_id.course_name,
+          teacher_id: course.course_id.teacher_id.id,
+          first_name: course.course_id.teacher_id.first_name,
+          middle_name: course.course_id.teacher_id.middle_name,
+          last_name: course.course_id.teacher_id.last_name,
         };
       });
 

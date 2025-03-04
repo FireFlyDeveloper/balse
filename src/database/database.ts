@@ -187,7 +187,10 @@ export default class Database {
   }
 
   async getEnrollmentsByStudent(studentId: string) {
-    return await this.client.db.Enrollments.select(["course_id"])
+    return await this.client.db.Enrollments.select([
+      "course_id",
+      "course_id.teacher_id",
+    ])
       .filter({
         student_id: studentId,
       })

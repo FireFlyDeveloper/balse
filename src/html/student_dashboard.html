@@ -41,12 +41,15 @@
             </h1>
           </div>
           <div class="flex items-center space-x-3">
-            <button
-              onclick="logout()"
-              class="bg-yellow-400 text-blue-800 px-4 py-2 rounded-lg hover:bg-yellow-500 transition flex items-center text-sm"
+            <div class="text-right">
+              <p class="text-yellow-400 font-semibold">Welcome back,</p>
+              <p class="text-white" id="student-name">Loading...</p>
+            </div>
+            <div
+              class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center"
             >
-              <i class="bi bi-box-arrow-left mr-2"></i> Logout
-            </button>
+              <i class="bi bi-person-fill text-xl text-blue-800"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -54,11 +57,13 @@
 
     <!-- Main Content -->
     <div class="max-w-6xl mx-auto px-4 py-8">
-      <!-- Student Information Section -->
-      <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+      <!-- Student Information Card -->
+      <div
+        class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-400 fade-in"
+      >
         <h2 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
-          <i class="bi bi-person-circle mr-2 text-blue-800"></i> Student
-          Information
+          <i class="bi bi-person-badge text-blue-800 mr-2"></i>
+          Student Information
         </h2>
         <div id="studentDetails" class="space-y-3">
           <!-- Student details will be inserted dynamically -->
@@ -68,13 +73,14 @@
       <!-- Enrolled Courses Section -->
       <div class="bg-white rounded-xl shadow-lg p-6 mt-6 fade-in">
         <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
-          <i class="bi bi-book mr-2 text-blue-800"></i> Enrolled Courses
+          <i class="bi bi-book text-blue-800 mr-2"></i> Enrolled Courses
         </h3>
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead class="bg-blue-800 text-white">
               <tr>
-                <th class="p-3 text-left text-sm">Course Name</th>
+                <th class="p-3 text-left">Course Name</th>
+                <th class="p-3 text-left">Course Teacher</th>
               </tr>
             </thead>
             <tbody
@@ -90,15 +96,15 @@
       <!-- Grades Section -->
       <div class="bg-white rounded-xl shadow-lg p-6 mt-6 fade-in">
         <h3 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
-          <i class="bi bi-book mr-2 text-blue-800"></i> Grades
+          <i class="bi bi-file-earmark-text text-blue-800 mr-2"></i> Grades
         </h3>
         <div class="overflow-x-auto">
           <table class="w-full">
             <thead class="bg-blue-800 text-white">
               <tr>
-                <th class="p-3 text-left text-sm">Course Name</th>
-                <th class="p-3 text-left text-sm">Grade</th>
-                <th class="p-3 text-left text-sm">Grading Period</th>
+                <th class="p-3 text-left">Course Name</th>
+                <th class="p-3 text-left">Grade</th>
+                <th class="p-3 text-left">Grading Period</th>
               </tr>
             </thead>
             <tbody id="gradesTableBody" class="divide-y divide-blue-100">
@@ -106,6 +112,16 @@
             </tbody>
           </table>
         </div>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="flex justify-end mt-6 fade-in">
+        <button
+          onclick="logout()"
+          class="flex items-center px-6 py-3 bg-blue-800 text-white rounded-lg hover:bg-blue-900 transition"
+        >
+          <i class="bi bi-box-arrow-left mr-2"></i> Logout
+        </button>
       </div>
     </div>
 
@@ -164,6 +180,7 @@
               (course) => `
                 <tr class="hover:bg-blue-50 transition-all">
                   <td class="p-3 text-sm">${course.course_name}</td>
+                  <td class="p-3 text-sm">${course.last_name}, ${course.first_name} ${course.last_name}</td>
                 </tr>
               `,
             )
