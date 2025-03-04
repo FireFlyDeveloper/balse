@@ -261,6 +261,7 @@ class Teacher extends Router {
 
       const data = courses.map((course: any) => {
         return {
+          id: course.id,
           grade: course.grade,
           grading_period: course.grading_period,
           coures_id: course.course_id.id,
@@ -269,6 +270,25 @@ class Teacher extends Router {
       });
 
       return c.json({ loggedIn: true, data: data });
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
+
+  async updateGrades(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isTeacher(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id, data } = await c.req.json();
+
+      await this.db.updateGrade(id, data);
+
+      return c.json({ loggedIn: true });
     } catch (error) {
       console.error(error);
       return c.json({ error: "Internal Server Error" }, 500);

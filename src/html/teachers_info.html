@@ -15,31 +15,25 @@
           opacity: 0;
           transform: translateY(20px);
         }
-
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
-
       .fade-in {
         animation: fadeIn 0.8s ease-out;
       }
-
       .theme-blue {
         color: #1d4ed8;
       }
-
       .theme-yellow {
         color: #f59e0b;
       }
-
       .hidden-section {
         display: none;
       }
     </style>
   </head>
-
   <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen">
     <!-- Header -->
     <div class="w-full bg-blue-800 shadow-lg">
@@ -91,6 +85,7 @@
                   <th class="p-4 text-left">Course Name</th>
                   <th class="p-4 text-left">Grade</th>
                   <th class="p-4 text-left">Grading Period</th>
+                  <th class="p-4 text-left">Action</th>
                 </tr>
               </thead>
               <tbody id="gradesTableBody" class="divide-y divide-blue-100">
@@ -112,7 +107,7 @@
       </div>
     </div>
 
-    <!-- Grade Modal -->
+    <!-- Add Grade Modal -->
     <div
       id="gradeModal"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
@@ -184,6 +179,68 @@
       </div>
     </div>
 
+    <!-- Update Grade Modal -->
+    <div
+      id="updateGradeModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+        <h2 class="text-xl font-bold text-blue-800 mb-4">Update Grade</h2>
+        <form id="updateGradeForm">
+          <input type="hidden" id="updateGradeId" name="id" />
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Grade</label>
+            <input
+              type="text"
+              name="grade"
+              id="updateGradeValue"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Grading Period</label
+            >
+            <select
+              name="grading_period"
+              id="updateGradingPeriod"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="Semester 1 (1st Year)">
+                Semester 1 (1st Year)
+              </option>
+              <option value="Semester 2 (1st Year)">
+                Semester 2 (1st Year)
+              </option>
+              <option value="Semester 1 (2nd Year)">
+                Semester 1 (2nd Year)
+              </option>
+              <option value="Semester 2 (2nd Year)">
+                Semester 2 (2nd Year)
+              </option>
+            </select>
+          </div>
+          <div class="flex justify-end space-x-4">
+            <button
+              type="button"
+              onclick="closeUpdateGradeModal()"
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script>
       // Fetch utilities
       async function fetchData(url, options) {
@@ -213,13 +270,13 @@
           // Display student details
           const studentDetails = document.getElementById("studentDetails");
           studentDetails.innerHTML = `
-      <p class="text-lg"><strong>First Name:</strong> ${studentData.data.first_name}</p>
-      <p class="text-lg"><strong>Middle Name:</strong> ${studentData.data.middle_name || "N/A"}</p>
-      <p class="text-lg"><strong>Last Name:</strong> ${studentData.data.last_name}</p>
-      <p class="text-lg"><strong>Date of Birth:</strong> ${studentData.data.date_of_birth}</p>
-      <p class="text-lg"><strong>Enrollment Date:</strong> ${new Date(studentData.data.enrollment_date).toLocaleString()}</p>
-      <p class="text-lg"><strong>Class Name:</strong> ${studentData.data.class_name}</p>
-    `;
+            <p class="text-lg"><strong>First Name:</strong> ${studentData.data.first_name}</p>
+            <p class="text-lg"><strong>Middle Name:</strong> ${studentData.data.middle_name || "N/A"}</p>
+            <p class="text-lg"><strong>Last Name:</strong> ${studentData.data.last_name}</p>
+            <p class="text-lg"><strong>Date of Birth:</strong> ${studentData.data.date_of_birth}</p>
+            <p class="text-lg"><strong>Enrollment Date:</strong> ${new Date(studentData.data.enrollment_date).toLocaleString()}</p>
+            <p class="text-lg"><strong>Class Name:</strong> ${studentData.data.class_name}</p>
+          `;
 
           // Fetch grades
           const grades = await fetchData("/teacher/students/grades", {
@@ -228,17 +285,25 @@
             body: JSON.stringify({ id: studentId }),
           });
 
-          // Display grades
+          // Display grades with an "Update" button
           const gradesTableBody = document.getElementById("gradesTableBody");
           gradesTableBody.innerHTML = grades.data
             .map(
               (grade) => `
-          <tr class="hover:bg-blue-50 cursor-pointer transition-all">
-            <td class="p-4">${grade.course_name}</td>
-            <td class="p-4">${grade.grade || "N/A"}</td>
-            <td class="p-4">${grade.grading_period || "N/A"}</td>
-          </tr>
-        `,
+                <tr class="hover:bg-blue-50 cursor-pointer transition-all">
+                  <td class="p-4">${grade.course_name}</td>
+                  <td class="p-4">${grade.grade || "N/A"}</td>
+                  <td class="p-4">${grade.grading_period || "N/A"}</td>
+                  <td class="p-4">
+                    <button
+                      onclick="openUpdateGradeModal('${grade.id}', '${grade.grade}', '${grade.grading_period}')"
+                      class="bg-yellow-400 text-blue-800 px-3 py-1 rounded-lg hover:bg-yellow-500 transition"
+                    >
+                      Update
+                    </button>
+                  </td>
+                </tr>
+              `,
             )
             .join("");
 
@@ -264,8 +329,8 @@
           courseSelect.innerHTML = availableCourses
             .map(
               (course) => `
-          <option value="${course.course_id}">${course.course_name}</option>
-        `,
+                <option value="${course.course_id}">${course.course_name}</option>
+              `,
             )
             .join("");
         } catch (error) {
@@ -300,6 +365,33 @@
         }
       }
 
+      // Handle update grade form submission
+      async function handleUpdateGradeForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const gradeId = formData.get("id");
+
+        try {
+          await fetchData(`/teacher/students/update-grades`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: gradeId,
+              data: {
+                grade: formData.get("grade"),
+                grading_period: formData.get("grading_period"),
+              },
+            }),
+          });
+
+          alert("Grade updated successfully!");
+          closeUpdateGradeModal();
+          await loadStudentInfo(); // Refresh the student info
+        } catch (error) {
+          alert(error.message || "Failed to update grade");
+        }
+      }
+
       // Grade modal controls
       function openGradeModal() {
         document.getElementById("gradeModal").classList.remove("hidden");
@@ -307,6 +399,18 @@
 
       function closeGradeModal() {
         document.getElementById("gradeModal").classList.add("hidden");
+      }
+
+      // Update grade modal controls
+      function openUpdateGradeModal(gradeId, grade, gradingPeriod) {
+        document.getElementById("updateGradeId").value = gradeId;
+        document.getElementById("updateGradeValue").value = grade;
+        document.getElementById("updateGradingPeriod").value = gradingPeriod;
+        document.getElementById("updateGradeModal").classList.remove("hidden");
+      }
+
+      function closeUpdateGradeModal() {
+        document.getElementById("updateGradeModal").classList.add("hidden");
       }
 
       // Logout handler
@@ -330,6 +434,9 @@
       document
         .getElementById("gradeForm")
         .addEventListener("submit", handleGradeForm);
+      document
+        .getElementById("updateGradeForm")
+        .addEventListener("submit", handleUpdateGradeForm);
     </script>
   </body>
 </html>

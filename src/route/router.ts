@@ -78,8 +78,11 @@ router.get("teacher/students/:id", (c) => teacher.student(c));
 router.get("teacher/students/info/:id", (c) => teacher.info(c));
 router.post("teacher/students/info", (c) => teacher.getStudentInfoById(c));
 router.post("teacher/students/enrolled", (c) => teacher.getCoursesStudentId(c));
+
+// Grades Routes
 router.post("teacher/students/add-grades", (c) => teacher.addGrades(c));
 router.post("teacher/students/grades", (c) => teacher.getGradesStudentId(c));
+router.post("teacher/students/update-grades", (c) => teacher.updateGrades(c));
 
 // ############## Student Routes ############## //
 router.get("student/:id", (c) => student.student(c));
