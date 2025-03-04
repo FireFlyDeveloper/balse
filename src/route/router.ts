@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import login from "./login";
 import admin from "./admin";
 import teacher from "./teacher";
+import student from "./student";
 
 const router = new Hono();
 
@@ -79,5 +80,17 @@ router.post("teacher/students/info", (c) => teacher.getStudentInfoById(c));
 router.post("teacher/students/enrolled", (c) => teacher.getCoursesStudentId(c));
 router.post("teacher/students/add-grades", (c) => teacher.addGrades(c));
 router.post("teacher/students/grades", (c) => teacher.getGradesStudentId(c));
+
+// ############## Student Routes ############## //
+router.get("student/:id", (c) => student.student(c));
+
+// Students Routes
+router.post("student", (c) => student.getStudentById(c));
+
+// Enrollment Routes
+router.post("student/enrolled-courses", (c) => student.getEnrolledCourse(c));
+
+// Grades Routes
+router.post("student/grades", (c) => student.getStudentGrades(c));
 
 export default router;
