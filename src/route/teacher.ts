@@ -87,7 +87,7 @@ class Teacher extends Router {
 
       const data = courses.map((course: any) => {
         return {
-          coures_id: course.course_id.id,
+          course_id: course.course_id.id,
           course_name: course.course_id.course_name,
         };
       });
