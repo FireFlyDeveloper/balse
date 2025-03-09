@@ -2,11 +2,13 @@ import { readFile } from "fs/promises";
 import Database from "../database/database";
 import { Role } from "../models/types";
 import bcrypt from "bcrypt";
+import GoogleSMTP from "../mailer/mailer";
 
 export default abstract class Router {
   public dir: string = "./src/html";
   public db: Database = new Database();
   public rf = readFile;
+  public mailer: GoogleSMTP = new GoogleSMTP();
 
   private saltRounds: number = 10;
 

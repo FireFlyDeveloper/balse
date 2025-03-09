@@ -1,5 +1,6 @@
 import { Context } from "hono";
 import Router from ".";
+import nodemailer, { SendMailOptions } from "nodemailer";
 
 class Admin extends Router {
   // Page
@@ -143,6 +144,119 @@ class Admin extends Router {
       };
 
       const teacher = await this.db.createTeacher(id, data);
+
+      const mailOptions: SendMailOptions = {
+        from: `"Balayan SHS - No Reply" <${process.env.EMAIL}>`,
+        to: email,
+        subject: "Your Teacher Account Credentials",
+        text: `Dear ${this.capitalizeWords(first_name)} ${this.capitalizeWords(
+          last_name,
+        )},\n\nWelcome to Balayan SHS - Teacher Portal! Your teacher account has been successfully created. Below are your login credentials:\n\nTeacher User ID: ${id}\nPassword: ${this.capitalizeWords(
+          first_name,
+        )}${this.capitalizeWords(last_name)}123\n\nPlease log in to the portal using the link below and change your password immediately for security reasons.\n\nLogin Link: https://balse-portal.fireflylab.top/login-teacher.\n\nBest regards,\nBalayan SHS Admin Team`,
+        html: `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Teacher Account Credentials</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                background-color: #f7fafc;
+                color: #2d3748;
+                margin: 0;
+                padding: 0;
+              }
+              .container {
+                max-width: 600px;
+                margin: 20px auto;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+              }
+              .header {
+                background-color: #2b6cb0;
+                color: #ffffff;
+                padding: 20px;
+                text-align: center;
+              }
+              .header h1 {
+                margin: 0;
+                font-size: 24px;
+              }
+              .content {
+                padding: 20px;
+              }
+              .content h2 {
+                font-size: 20px;
+                margin-bottom: 16px;
+                color: #2b6cb0;
+              }
+              .content p {
+                font-size: 16px;
+                line-height: 1.5;
+                margin-bottom: 16px;
+              }
+              .credentials {
+                background-color: #edf2f7;
+                padding: 16px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+              }
+              .credentials p {
+                margin: 0;
+                font-size: 14px;
+              }
+              .footer {
+                text-align: center;
+                padding: 16px;
+                background-color: #2b6cb0;
+                color: #ffffff;
+                font-size: 14px;
+              }
+              .footer a {
+                color: #ffffff;
+                text-decoration: underline;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Balayan SHS - Teacher Account</h1>
+              </div>
+              <div class="content">
+                <h2>Welcome, ${this.capitalizeWords(first_name)} ${this.capitalizeWords(
+                  last_name,
+                )}!</h2>
+                <p>Your teacher account has been successfully created. Below are your login credentials:</p>
+                <div class="credentials">
+                  <p><strong>Teacher ID:</strong> ${id}</p>
+                  <p><strong>Password:</strong> ${this.capitalizeWords(
+                    first_name,
+                  )}${this.capitalizeWords(last_name)}123</p>
+                </div>
+                <p>Please log in to the portal using the link below and change your password immediately for security reasons.</p>
+                <p><a href="https://balse-portal.fireflylab.top/login-teacher" style="color: #2b6cb0; text-decoration: none;">Login to Balayan SHS Portal</a></p>
+                <p>If you have any questions or need assistance, please contact the admin team.</p>
+              </div>
+              <div class="footer">
+                <p>Best regards,<br>Balayan SHS Admin Team</p>
+                <p><a href="https://www.facebook.com/DepEdTayoBSHS342209">Balayan SHS</a></p>
+              </div>
+            </div>
+          </body>
+          </html>
+        `,
+      };
+
+      this.mailer
+        .sendMail(mailOptions)
+        .then(() => console.log("Email sent successfully"))
+        .catch((error) => console.error("Failed to send email:", error));
 
       return c.json({ loggedIn: true, data: teacher });
     } catch (error) {
