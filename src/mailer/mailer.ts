@@ -29,18 +29,3 @@ class GoogleSMTP {
 }
 
 export default GoogleSMTP;
-
-// const googleSMTP = new GoogleSMTP();
-
-// const mailOptions: SendMailOptions = {
-//   from: `"No Reply" <${process.env.EMAIL}>`,
-//   to: "saludeskimdev@gmail.com",
-//   subject: "Hello from Google SMTP",
-//   text: "This is a test email sent using Google SMTP.",
-//   html: "<b>This is a test email sent using Google SMTP.</b>",
-// };
-
-// googleSMTP
-//   .sendMail(mailOptions)
-//   .then(() => console.log("Email sent successfully"))
-//   .catch((error) => console.error("Failed to send email:", error));
