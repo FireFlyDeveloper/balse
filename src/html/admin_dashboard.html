@@ -452,6 +452,18 @@
             />
           </div>
           <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email2"
+              name="email2"
+              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+            <p id="emailError2" class="text-red-500 text-sm mt-1 hidden">
+              Please enter a valid email address.
+            </p>
+          </div>
+          <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700"
               >Sections</label
             >
@@ -742,6 +754,18 @@
         event.preventDefault();
         const formData = new FormData(event.target);
 
+        const emailInput = document.querySelector('input[name="email2"]');
+        const emailError = document.getElementById("emailError2");
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(emailInput.value)) {
+          emailError.classList.remove("hidden");
+          event.preventDefault();
+          return;
+        } else {
+          emailError.classList.add("hidden");
+        }
+
         try {
           await fetchData("/students", {
             method: "POST",
@@ -753,6 +777,7 @@
               date_of_birth: formData.get("date_of_birth"),
               lrn: formData.get("student_lrn"),
               class_id: formData.get("classes_id"),
+              email: formData.get("email2"),
             }),
           });
 
