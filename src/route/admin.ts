@@ -118,7 +118,7 @@ class Admin extends Router {
         return c.json({ loggedIn: false });
       }
 
-      const { first_name, middle_name, last_name, departmentId } =
+      const { first_name, middle_name, last_name, departmentId, email } =
         await c.req.json();
 
       const name_ = this.textToNumbers(
@@ -139,6 +139,7 @@ class Admin extends Router {
         last_name,
         department_id: departmentId,
         password_hash: password,
+        email,
       };
 
       const teacher = await this.db.createTeacher(id, data);
