@@ -153,7 +153,7 @@ class Admin extends Router {
           last_name,
         )},\n\nWelcome to Balayan SHS - Teacher Portal! Your teacher account has been successfully created. Below are your login credentials:\n\nTeacher User ID: ${id}\nPassword: ${this.capitalizeWords(
           first_name,
-        )}${this.capitalizeWords(last_name)}123\n\nPlease log in to the portal using the link below and change your password immediately for security reasons.\n\nLogin Link: https://balse-portal.fireflylab.top/login-teacher.\n\nBest regards,\nBalayan SHS Admin Team`,
+        )}${this.capitalizeWords(last_name)}123\n\nPlease log in to the portal using the link below and change your password immediately for security reasons.\n\nLogin Link: https://balse-portal.onrender.com/login-teacher.\n\nBest regards,\nBalayan SHS Admin Team`,
         html: `
           <!DOCTYPE html>
           <html lang="en">
@@ -240,7 +240,7 @@ class Admin extends Router {
                   )}${this.capitalizeWords(last_name)}123</p>
                 </div>
                 <p>Please log in to the portal using the link below and change your password immediately for security reasons.</p>
-                <p><a href="https://balse-portal.fireflylab.top/login-teacher" style="color: #2b6cb0; text-decoration: none;">Login to Balayan SHS Portal</a></p>
+                <p><a href="https://balse-portal.onrender.com/login-teacher" style="color: #2b6cb0; text-decoration: none;">Login to Balayan SHS Portal</a></p>
                 <p>If you have any questions or need assistance, please contact the admin team.</p>
               </div>
               <div class="footer">
@@ -432,7 +432,7 @@ class Admin extends Router {
           last_name,
         )},\n\nWelcome to Balayan SHS - Student Portal! Your student account has been successfully created. Below are your login credentials:\n\nLRN (Username): ${lrn}\nPassword: ${this.capitalizeWords(
           first_name,
-        )}${this.capitalizeWords(last_name)}123\n\nPlease log in to the portal using the link below and change your password immediately for security reasons.\n\nLogin Link: https://balse-portal.fireflylab.top/login\n\nBest regards,\nBalayan SHS Admin Team`,
+        )}${this.capitalizeWords(last_name)}123\n\nPlease log in to the portal using the link below and change your password immediately for security reasons.\n\nLogin Link: https://balse-portal.onrender.com/login\n\nBest regards,\nBalayan SHS Admin Team`,
         html: `
           <!DOCTYPE html>
           <html lang="en">
@@ -519,7 +519,7 @@ class Admin extends Router {
                   )}${this.capitalizeWords(last_name)}123</p>
                 </div>
                 <p>Please log in to the portal using the link below and change your password immediately for security reasons.</p>
-                <p><a href="https://balse-portal.fireflylab.top/login" style="color: #2b6cb0; text-decoration: none;">Login to Balayan SHS Portal</a></p>
+                <p><a href="https://balse-portal.onrender.com/login" style="color: #2b6cb0; text-decoration: none;">Login to Balayan SHS Portal</a></p>
                 <p>If you have any questions or need assistance, please contact the admin team.</p>
               </div>
               <div class="footer">
