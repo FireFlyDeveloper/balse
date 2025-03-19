@@ -96,4 +96,6 @@ router.post("student/enrolled-courses", (c) => student.getEnrolledCourse(c));
 // Grades Routes
 router.post("student/grades", (c) => student.getStudentGrades(c));
 
+router.post("student/change-credentials", (c) => student.changePassword(c));
+
 export default router;

@@ -108,6 +108,34 @@ class Student extends Router {
       return c.json({ error: "Internal Server Error" }, 500);
     }
   }
+
+  async changePassword(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isStudent(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id, password, current_password } = await c.req.json();
+
+      const _student = await this.db.getStudentPasswordById(id);
+
+      if (_student && (await this.verifyPassword(current_password, _student.password_hash))) {
+        const _password = await this.hashPassword(`${password}`);
+        const student = await this.db.updateStudent(id, { password_hash: _password });
+        return c.json({ loggedIn: true, data: student });
+      }
+
+      return c.json(
+        { success: false, message: "Incorrect password" },
+        401,
+      );
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
 }
 
 export default new Student();
