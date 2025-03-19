@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@hono/node-server": "^1.13.8",
     "@types/bcrypt": "^5.0.2",
     "@types/nodemailer": "^6.4.17",
     "@xata.io/client": "^0.30.1",

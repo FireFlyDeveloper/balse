@@ -3,6 +3,7 @@ import { Session, sessionMiddleware, CookieStore } from "hono-sessions";
 import { SessionDataTypes } from "./models/types";
 import router from "./route/router";
 import { readFile } from "fs/promises";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono<{
   Variables: {
@@ -11,6 +12,8 @@ const app = new Hono<{
 }>();
 
 const store = new CookieStore();
+
+app.use("/static/*", serveStatic({ root: "./src/" }));
 
 app.notFound(async (c: Context) => {
   try {
