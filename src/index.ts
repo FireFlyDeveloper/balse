@@ -14,6 +14,7 @@ const app = new Hono<{
 const store = new CookieStore();
 
 app.use("/static/*", serveStatic({ root: "./src/" }));
+app.use('/favicon.ico', serveStatic({ path: './src/favicon.ico' }));
 
 app.notFound(async (c: Context) => {
   try {
