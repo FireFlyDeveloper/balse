@@ -288,6 +288,10 @@ export default class Database {
     return await this.client.db.Admins.delete(adminId);
   }
 
+  async getAdminPasswordById(adminId: string) {
+    return await this.client.db.Admins.read(adminId, ["password_hash"]);
+  }
+
   /** UTILITY METHODS **/
   async calculateStudentAverage(studentId: string) {
     const grades = await this.getGradesByStudent(studentId);

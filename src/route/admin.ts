@@ -888,6 +888,36 @@ class Admin extends Router {
       return c.json({ error: "Internal Server Error" }, 500);
     }
   }
+
+  async changePassword(c: Context) {
+    try {
+      const session = c.get("session");
+
+      if (!this.isAdmin(session)) {
+        return c.json({ loggedIn: false });
+      }
+
+      const { id, password, current_password } = await c.req.json();
+
+      const _admin = await this.db.getAdminPasswordById(id);
+
+      if (
+        _admin &&
+        (await this.verifyPassword(current_password, _admin.password_hash))
+      ) {
+        const _password = await this.hashPassword(`${password}`);
+        await this.db.updateAdmin(id, {
+          password_hash: _password,
+        });
+        return c.json({ loggedIn: true });
+      }
+
+      return c.json({ success: false, message: "Incorrect password" }, 401);
+    } catch (error) {
+      console.error(error);
+      return c.json({ error: "Internal Server Error" }, 500);
+    }
+  }
 }
 
 export default new Admin();

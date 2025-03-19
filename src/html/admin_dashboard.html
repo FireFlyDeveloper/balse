@@ -52,6 +52,12 @@
           </div>
           <div class="flex items-center space-x-3">
             <button
+              onclick="openChangeCredentialsModal()"
+              class="bg-yellow-400 text-blue-800 px-6 py-2 rounded-lg hover:bg-yellow-500 transition flex items-center"
+            >
+              <i class="bi bi-gear-fill mr-2"></i> Change Password
+            </button>
+            <button
               onclick="logout()"
               class="bg-yellow-400 text-blue-800 px-6 py-2 rounded-lg hover:bg-yellow-500 transition flex items-center"
             >
@@ -494,6 +500,67 @@
         </form>
       </div>
     </div>
+
+    <!-- Change Credentials Modal -->
+    <div
+      id="changeCredentialsModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-lg p-6 w-96">
+        <h3 class="text-xl font-bold text-blue-800 mb-4">Change Password</h3>
+        <form id="changeCredentialsForm">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Current Password</label
+            >
+            <input
+              type="password"
+              id="currentPassword"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Enter current password"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >New Password</label
+            >
+            <input
+              type="password"
+              id="newPassword"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Enter new password"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              id="confirmPassword"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Confirm new password"
+            />
+          </div>
+          <div class="flex justify-end space-x-3">
+            <button
+              type="button"
+              onclick="closeChangeCredentialsModal()"
+              class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script>
       let departments = []; // Store departments for dropdowns
       let sections = [];
@@ -832,6 +899,57 @@
       function closeStudentModal() {
         document.getElementById("createStudentModal").classList.add("hidden");
       }
+
+      // Change Credentials Modal
+      function openChangeCredentialsModal() {
+        document
+          .getElementById("changeCredentialsModal")
+          .classList.remove("hidden");
+      }
+
+      function closeChangeCredentialsModal() {
+        document
+          .getElementById("changeCredentialsModal")
+          .classList.add("hidden");
+        document.getElementById("changeCredentialsForm").reset();
+      }
+
+      // Handle form submission for changing credentials
+      document
+        .getElementById("changeCredentialsForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const newPassword = document.getElementById("newPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const currentPassword =
+            document.getElementById("currentPassword").value;
+
+          if (newPassword !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+          }
+
+          try {
+            const adminId = window.location.pathname.split("/").pop(); // Extract admin ID from URL
+            const response = await fetch("/admin/change-credentials", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: adminId,
+                password: newPassword,
+                current_password: currentPassword,
+              }),
+            });
+
+            if (!response.ok) throw new Error("Failed to update credentials.");
+            alert("Password updated successfully.");
+            closeChangeCredentialsModal();
+          } catch (error) {
+            console.error("Error updating credentials:", error);
+            alert("Failed to update password. Please try again.");
+          }
+        });
 
       // Initial data load
       (async () => {

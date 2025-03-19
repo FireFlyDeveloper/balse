@@ -58,6 +58,8 @@ router.post("students/enroll", (c) => admin.enrollStudent(c));
 router.post("students/enrolled", (c) => admin.getEnrollCourse(c));
 router.post("students/unenrolled", (c) => admin.deleteEnrollment(c));
 
+router.post("admin/change-credentials", (c) => admin.changePassword(c));
+
 // ############## Teacher Routes ############## //
 router.get("teacher/:id", (c) => teacher.teacher(c));
 
