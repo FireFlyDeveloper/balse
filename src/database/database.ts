@@ -80,6 +80,10 @@ export default class Database {
     }).getAll();
   }
 
+  async getTeacherPasswordById(teacherId: string) {
+    return await this.client.db.Teachers.read(teacherId, ["password_hash"]);
+  }
+
   /** COURSES **/
   async addCourse(
     id: string,

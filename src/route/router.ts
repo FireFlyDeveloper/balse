@@ -84,6 +84,8 @@ router.post("teacher/students/add-grades", (c) => teacher.addGrades(c));
 router.post("teacher/students/grades", (c) => teacher.getGradesStudentId(c));
 router.post("teacher/students/update-grades", (c) => teacher.updateGrades(c));
 
+router.post("teacher/change-credentials", (c) => teacher.changePassword(c));
+
 // ############## Student Routes ############## //
 router.get("student/:id", (c) => student.student(c));
 

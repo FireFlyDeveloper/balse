@@ -126,10 +126,10 @@ class Student extends Router {
         (await this.verifyPassword(current_password, _student.password_hash))
       ) {
         const _password = await this.hashPassword(`${password}`);
-        const student = await this.db.updateStudent(id, {
+        await this.db.updateStudent(id, {
           password_hash: _password,
         });
-        return c.json({ loggedIn: true, data: student });
+        return c.json({ loggedIn: true });
       }
 
       return c.json({ success: false, message: "Incorrect password" }, 401);
