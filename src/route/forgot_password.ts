@@ -129,9 +129,12 @@ class ForgotPassword extends Router {
 
       // Set session data
       const session = c.get("session");
-      session.forgot("resetToken");
-      session.forgot("token_id");
-      session.forgot("role");
+
+      if (session.get("resetToken")) {
+        session.forgot("resetToken");
+        session.forgot("token_id");
+        session.forgot("role");
+      }
 
       session.set("resetToken", resetToken);
       session.set("token_id", id);
@@ -174,9 +177,11 @@ class ForgotPassword extends Router {
 
       // Set session data
       const session = c.get("session");
-      session.forgot("resetToken");
-      session.forgot("token_id");
-      session.forgot("role");
+      if (session.get("resetToken")) {
+        session.forgot("resetToken");
+        session.forgot("token_id");
+        session.forgot("role");
+      }
 
       session.set("resetToken", resetToken);
       session.set("token_id", id);
