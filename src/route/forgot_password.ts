@@ -97,9 +97,9 @@ class ForgotPassword extends Router {
       }
 
       // Clear session data
-      session.forgot("resetToken");
-      session.forgot("token_id");
-      session.forgot("role");
+      session.forget("resetToken");
+      session.forget("token_id");
+      session.forget("role");
 
       return c.json({ message: "Password reset successfully" });
     } catch (error) {
@@ -129,12 +129,9 @@ class ForgotPassword extends Router {
 
       // Set session data
       const session = c.get("session");
-
-      if (session.get("resetToken")) {
-        session.forgot("resetToken");
-        session.forgot("token_id");
-        session.forgot("role");
-      }
+      session.forget("resetToken");
+      session.forget("token_id");
+      session.forget("role");
 
       session.set("resetToken", resetToken);
       session.set("token_id", id);
@@ -177,11 +174,9 @@ class ForgotPassword extends Router {
 
       // Set session data
       const session = c.get("session");
-      if (session.get("resetToken")) {
-        session.forgot("resetToken");
-        session.forgot("token_id");
-        session.forgot("role");
-      }
+      session.forget("resetToken");
+      session.forget("token_id");
+      session.forget("role");
 
       session.set("resetToken", resetToken);
       session.set("token_id", id);
