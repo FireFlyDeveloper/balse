@@ -3,6 +3,7 @@ import Database from "../database/database";
 import { Role } from "../models/types";
 import bcrypt from "bcrypt";
 import GoogleSMTP from "../mailer/mailer";
+import { randomBytes } from "crypto";
 
 export default abstract class Router {
   public dir: string = "./src/html";
@@ -47,5 +48,9 @@ export default abstract class Router {
       .split("")
       .map((c) => c.charCodeAt(0) - 96)
       .join("");
+  }
+
+  generateToken(length: number = 32): string {
+    return randomBytes(length).toString("hex");
   }
 }

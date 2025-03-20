@@ -3,6 +3,7 @@ import login from "./login";
 import admin from "./admin";
 import teacher from "./teacher";
 import student from "./student";
+import forgot_password from "./forgot_password";
 
 const router = new Hono();
 
@@ -101,5 +102,17 @@ router.post("student/enrolled-courses", (c) => student.getEnrolledCourse(c));
 router.post("student/grades", (c) => student.getStudentGrades(c));
 
 router.post("student/change-credentials", (c) => student.changePassword(c));
+
+// ############## Forgot Password Routes ############## //
+router.get("token/:id", (c) => forgot_password.token_forgot(c));
+router.post("token", (c) => forgot_password.token(c));
+
+router.get("student-forgot-password", (c) =>
+  forgot_password.students_forgot(c),
+);
+router.get("teacher-forgot-password", (c) => forgot_password.teacher_forgot(c));
+
+router.post("student_api", (c) => forgot_password.student_api(c));
+router.post("teacher_api", (c) => forgot_password.teacher_api(c));
 
 export default router;

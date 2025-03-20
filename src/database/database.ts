@@ -14,6 +14,7 @@ export default class Database {
 
   async getStudentById(studentId: string) {
     return await this.client.db.Students.read(studentId, [
+      "email",
       "first_name",
       "middle_name",
       "last_name",
@@ -51,6 +52,7 @@ export default class Database {
 
   async getTeacherById(teacherId: string) {
     return await this.client.db.Teachers.read(teacherId, [
+      "email",
       "first_name",
       "middle_name",
       "last_name",
