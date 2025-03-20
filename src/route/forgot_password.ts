@@ -239,7 +239,7 @@ class ForgotPassword extends Router {
     resetToken: string,
     role: string,
   ) {
-    const resetLink = `https://balse-portal.onrender.com/reset-password?token=${resetToken}`;
+    const resetLink = `https://balse-portal.onrender.com/reset-password/${resetToken}`;
 
     const mailOptions: SendMailOptions = {
       from: `"Balayan SHS - No Reply" <${process.env.EMAIL}>`,
