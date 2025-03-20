@@ -104,7 +104,7 @@ router.post("student/grades", (c) => student.getStudentGrades(c));
 router.post("student/change-credentials", (c) => student.changePassword(c));
 
 // ############## Forgot Password Routes ############## //
-router.get("token/:id", (c) => forgot_password.token_forgot(c));
+router.get("reset-password/:id", (c) => forgot_password.token_forgot(c));
 router.post("token", (c) => forgot_password.token(c));
 
 router.get("student-forgot-password", (c) =>
